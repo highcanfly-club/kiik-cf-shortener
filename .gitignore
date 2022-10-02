@@ -1,0 +1,40 @@
+node_modules
+.codesandbox/workspace.json
+.DS_Store
+node_modules
+/dist
+.mf
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode/launch.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+commit.sh
+yarn.lock
+launch-serve
+wrangler-serve
+commit.json
+src/config/commit.json
+sanity-conf.json
+auth0-conf.json
+_sensitive_datas/_sensitive_datas.tar.xz
+.vscode/settings.json
+.vscode/launch.json
+launch-*
+l*.pem
+l*.key
+
