@@ -13,7 +13,7 @@ const container = client
 export const getLongUrl = (shortlink: string) => {
   const querySpec = {
     query:
-      "SELECT c.name,c['value'] FROM c WHERE c.name='@shortLink' AND c.auth0Domain_hash=@hash",
+      "SELECT c.name,c['value'] FROM c WHERE c.name=@shortLink AND c.auth0Domain_hash=@hash",
     parameters: [
       {
         name: "@shortLink",
@@ -25,14 +25,14 @@ export const getLongUrl = (shortlink: string) => {
       },
     ],
   };
-  return new Promise<{ count: number; rating: number }>((resolve) => {
+  return new Promise<{ name: string; value: string }>((resolve) => {
     container.items
-      .query<{ $1: string; $2: string }>(querySpec, {})
+      .query<{ name: string; value: string }>(querySpec, {})
       .fetchNext()
       .then((results) => {
         resolve({
-          count: parseInt(results.resources[0].$1),
-          rating: parseFloat(results.resources[0].$2),
+          name: (results.resources[0].name),
+          value: (results.resources[0].value),
         });
       });
   });
