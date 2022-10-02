@@ -20,7 +20,11 @@ const routes = [
     {
         path: "/:pathMatch(.*)*",
         name: 'default',
-        redirect: "/"
+        redirect: to => {
+            console.log(to)
+            window.location.href = `${window.location.origin}/api/redirect?to=${to.path.substring(1)}`
+            return {}
+          },
     } ,
 ] as RouteRecordRaw[]
 
