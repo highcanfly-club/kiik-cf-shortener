@@ -1,4 +1,5 @@
 import { CosmosClient } from "@azure/cosmos";
+export type ResourceNameValue = { name: string; value: string;};
 const options = {
   endpoint: process.env.COSMOSDB_ENDPOINT,
   key: process.env.COSMOSDB_KEY,
@@ -11,6 +12,7 @@ const container = client
   .container(process.env.COSMOSDB_COLLECTION);
 
 export const getLongUrl = (shortlink: string) => {
+  
   const querySpec = {
     query:
       "SELECT c.name,c['value'] FROM c WHERE c.name=@shortLink AND c.auth0Domain_hash=@hash",
@@ -25,15 +27,27 @@ export const getLongUrl = (shortlink: string) => {
       },
     ],
   };
-  return new Promise<{ name: string; value: string }>((resolve) => {
+  return new Promise<ResourceNameValue>((resolve, reject) => {
     container.items
-      .query<{ name: string; value: string }>(querySpec, {})
+      .query<ResourceNameValue>(querySpec, {})
       .fetchNext()
       .then((results) => {
-        resolve({
-          name: (results.resources[0].name),
-          value: (results.resources[0].value),
-        });
+        if (
+          results.resources &&
+          results.resources[0] &&
+          results.resources[0].name &&
+          results.resources[0].value
+        ) {
+          resolve({
+            name: results.resources[0].name,
+            value: results.resources[0].value,
+          });
+        } else {
+          reject(results);
+        }
+      })
+      .catch((error) => {
+        reject(error);
       });
   });
 };
