@@ -43,11 +43,11 @@ export const getLongUrl = (shortlink: string) => {
             value: results.resources[0].value,
           });
         } else {
-          reject(results);
+          reject("ERROR: empty result");
         }
       })
-      .catch((error) => {
-        reject(error);
+      .catch(() => {
+        reject("ERROR: fetchNext().catch()");
       });
   });
 };
