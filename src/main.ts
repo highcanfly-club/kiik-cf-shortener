@@ -32,6 +32,16 @@ const routes = [
     name: "login"
   },
   {
+    path: "/add-shortlink",
+    component: () => import("@/auth0/AddShortLink.vue"),
+    name: "Add short link",
+  },
+  {
+    path: "/list-shortlinks",
+    component: () => import("@/auth0/ListShortLinks.vue"),
+    name: "list short links",
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "default",
     redirect: (to) => {

@@ -1,10 +1,17 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
+    "module": "CommonJS",
+    "target": "ESNext",
     "outDir": "dist",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "rootDir": ".",
+    "baseUrl": ".",
     "sourceMap": true,
-    "strict": false
+    "strict": false,
+    "paths": {
+      "@/config/*": ["config/*"]
+    }
   }
 }

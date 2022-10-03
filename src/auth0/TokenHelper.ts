@@ -10,19 +10,13 @@ This website use:
 import * as jose from 'jose'
 import { GetTokenSilentlyVerboseResponse } from '@auth0/auth0-spa-js'
 
-import * as jwks from '@/config/jwks.json'
+import * as jwks from '../config/jwks.json'
 const x509cert = `-----BEGIN CERTIFICATE-----\n${jwks.keys[0].x5c}\n-----END CERTIFICATE-----`
 const algorithm = 'RS256'
 
-export enum HIGHCANFLY_PERMISSION {
-  // eslint-disable-next-line no-unused-vars
-  development = 'blog:publisher:development',
-  // eslint-disable-next-line no-unused-vars
-  development_preview = 'blog:publisher:development:preview',
-  // eslint-disable-next-line no-unused-vars
-  production = 'blog:publisher:production',
-  // eslint-disable-next-line no-unused-vars
-  production_preview = 'blog:publisher:production:preview',
+export enum AUTH0_PERMISSION {
+  add_short_url = "add:any_short_url",
+  list_all_short_url = "list:all_short_url"
 }
 
 /**
