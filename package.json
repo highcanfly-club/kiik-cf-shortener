@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "preinstall": "cd api && npm install",
     "dev": "vite",
     "build": "vite build && gulp licenses",
     "preview": "vite preview",
