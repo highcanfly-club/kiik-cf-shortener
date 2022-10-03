@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {"node": "lts/*"},
   "scripts": {
     "prepare-env": "node --experimental-fetch --loader ts-node/esm ./prepare-env.ts",
     "preinstall": "cd api && npm install",
