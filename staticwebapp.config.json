@@ -5,7 +5,7 @@
     "navigationFallback": {
         "rewrite": "/index.html",
         "exclude": [
-            "/assets/*.{png,jpg,gif,svg,webp,woff,woff2,css,ttf,js}"
+            "/assets/*.{png,jpg,gif,svg,webp,woff,woff2,css,ttf,js}","!*"
         ]
     }
 }
