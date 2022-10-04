@@ -33,12 +33,12 @@ const routes = [
   },
   {
     path: "/add-shortlink",
-    component: () => import("./auth0/AddShortLink.vue"),
+    component: () => import("@/auth0/AddShortLink.vue"),
     name: "Add short link",
   },
   {
     path: "/list-shortlinks",
-    component: () => import("./auth0/ListShortLinks.vue"),
+    component: () => import("@/auth0/ListShortLinks.vue"),
     name: "list short links",
   },
   {

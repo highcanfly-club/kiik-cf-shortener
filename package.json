@@ -5,7 +5,7 @@
   "type": "module",
   "engines": {"node": ">=16.14.2"},
   "scripts": {
-    "prepare-env": "ls -lr src/auth0 && node --experimental-fetch --loader ts-node/esm ./prepare-env.ts",
+    "prepare-env": "ls -lr src/auth0 && cat /github/workspace/src/auth0/AddShortLink.vue && node --experimental-fetch --loader ts-node/esm ./prepare-env.ts",
     "preinstall": "cd api && npm install",
     "dev": "npm run prepare-env && vite",
     "build": "npm run prepare-env && vite build && gulp licenses",
