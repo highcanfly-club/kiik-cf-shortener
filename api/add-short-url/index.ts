@@ -3,7 +3,7 @@ import {
     isAllowed,
     parseTokenFromAuthorizationHeader,
     AUTH0_PERMISSION
-  } from "./TokenHelper"
+  } from "../auth0/TokenHelper"
   import { customAlphabet } from "nanoid";
 
 const httpTrigger: AzureFunction = async function (context: Context, request: HttpRequest): Promise<void> {

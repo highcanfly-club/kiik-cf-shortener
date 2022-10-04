@@ -94,7 +94,7 @@ This website use:
 </template>
 <script setup lang="ts">
 
-import { defineComponent, getCurrentInstance, ref } from "vue";
+import { getCurrentInstance, ref } from "vue";
 import { isAllowed, AUTH0_PERMISSION } from "./TokenHelper";
 import jwks from "@/config/jwks.json";
 import { Auth0Instance } from "./instance";
