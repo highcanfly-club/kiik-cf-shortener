@@ -1,3 +1,12 @@
+<!--
+=========================================================
+* © 2022 Ronan LE MEILLAT for INTERNAL DEVELOPMENT
+=========================================================
+This website use:
+- Vuejs v3
+- Font Awesome
+- And many others
+-->
 <template>
   <div>
     <h3 class="text-slate-800" v-if="formerrors.length">
