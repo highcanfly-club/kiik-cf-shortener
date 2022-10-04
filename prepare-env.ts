@@ -15,7 +15,7 @@ const auth0Conf = {
       if (err) return console.log(err);
     }
   );
-  fs.writeFile('./api/config/auth0-conf.json',
+  fs.writeFile('./api/common/config/auth0-conf.json',
   JSON.stringify(auth0Conf),
   'utf8', function (err) {
     if (err) return console.log(err);
@@ -72,7 +72,7 @@ const auth0Conf = {
       }
     );
     fs.writeFile(
-      "./api/config/jwks.json",
+      "./api/common/config/jwks.json",
       JSON.stringify(jwks),
       "utf8",
       function (err) {

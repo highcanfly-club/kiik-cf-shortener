@@ -12,41 +12,41 @@
       <tbody>
         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" v-for="data in kvData" :key="data.name">
           <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"><a
-              :href="`${canonical}!${data.name}`">{{ data.name }}</a></td>
+              :href="`${canonical}${data.name}`">{{ data.name }}</a></td>
           <td class="py-4 px-6">{{ data.value }}</td>
-          <td class="py-4 px-6">{{ (data.metadata !== null) ? data.metadata.description : '' }}</td>
-          <td class="py-4 px-6">{{ (data.metadata !== null) && (data.metadata.expiration !== null) ? `${(new
-              Date(data.metadata.expiration)).toLocaleDateString('fr-FR')} ${(new
-                Date(data.metadata.expiration)).toLocaleTimeString('fr-FR')}` : ''
+          <td class="py-4 px-6">{{ data.description }}</td>
+          <td class="py-4 px-6">{{`${(new
+          Date(data.expiration)).toLocaleDateString('fr-FR')}`
           }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
 import { isAllowed, AUTH0_PERMISSION } from "./TokenHelper";
 import jwks from "@/config/jwks.json";
+import { getAuth0 } from '@/auth0';
 
 interface kvStoreElement {
   name: string;
   value: string;
-  metadata: { description: string; expiration: number };
+  description: string;
+  expiration: number;
 }
 type kvStore = kvStoreElement[]
 
-export default defineComponent<{
-  token: string;
-  canListShortUrl: boolean;
-  kvData: kvStore;
-  canonical: URL
-}>({
-  mounted() {
-    this.$auth0
+const canonical = new URL(window.location.origin);
+const canListShortUrl = ref(false);
+const kvData = ref(null as kvStore);
+const $auth0 = getAuth0()
+
+onMounted(
+  () => {
+    $auth0
       .getTokenSilentlyVerbose()
       .then((token: { id_token: string; access_token: string }) => {
-        this.token = token.access_token;
         isAllowed(
           token.access_token,
           jwks.domain,
@@ -54,14 +54,14 @@ export default defineComponent<{
           AUTH0_PERMISSION.list_all_short_url
         )
           .then((hasRight) => {
-            this.canListShortUrl = hasRight;
+            canListShortUrl.value = hasRight;
           })
           .then(() => {
             fetch("/api/list-short-url", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${this.token}`,
+                Authorization: `Bearer ${token}`,
               },
               body: JSON.stringify({}),
             })
@@ -70,23 +70,12 @@ export default defineComponent<{
               })
               .then((data: kvStore) => {
                 console.log(data);
-                this.kvData = data;
+                kvData.value = data;
               });
           });
       });
-  },
-  data() {
-    const canonical = new URL(window.location.origin);
-    const token = ref("");
-    const canListShortUrl = ref(false);
-    const kvData = ref({});
-    return {
-      canListShortUrl,
-      kvData,
-      canonical,
-      token
-    };
-  },
-  methods: {},
-});
+  }
+)
+
+
 </script>

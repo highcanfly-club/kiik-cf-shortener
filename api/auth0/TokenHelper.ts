@@ -1,1 +1,0 @@
-../../src/auth0/TokenHelper.ts

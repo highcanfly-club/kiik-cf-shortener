@@ -6,7 +6,7 @@ This website use:
 - Vite, Vue3, FontAwesome 6, TailwindCss 3
 - And many others
 */
-import { createApp } from "vue";
+import { createApp, getCurrentInstance } from "vue";
 import App from "@/App.vue";
 import { createWebHistory, createRouter, RouteRecordRaw } from "vue-router";
 import type { Auth0Instance, RedirectCallback } from "@/auth0";
@@ -28,7 +28,7 @@ const routes = [
   },
   {
     path:"/login",
-    component: () => import("@/auth0/Auth0Login.vue"),
+    component: () => import("@/views/LinksPage.vue"),
     name: "login"
   },
   {

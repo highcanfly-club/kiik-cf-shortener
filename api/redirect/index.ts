@@ -2,11 +2,11 @@ import { AzureFunction, Context, HttpRequest } from "@azure/functions"
 import { getLongUrl } from "../common/cosmosdb";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-    context.log('HTTP trigger function processed a request.');
+    const auth0Domain: string = process.env.AUTH0_DOMAIN;
     const _to = (req.query.to || (req.body && req.body.to as string));
     const to = _to ? _to : 'Zp2MT'
     try{
-        const longUrl = (await getLongUrl(to)).value
+        const longUrl = (await getLongUrl(to,auth0Domain)).value
         console.log(`redirect to: ${longUrl}`)
         context.res = {
             status:302,
