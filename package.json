@@ -5,12 +5,13 @@
   "type": "module",
   "engines": {"node": ">=16.14.2"},
   "scripts": {
-    "prepare-env": "ls -lr src/auth0 && cat /github/workspace/src/auth0/AddShortLink.vue && node --experimental-fetch --loader ts-node/esm ./prepare-env.ts",
+    "prepare-env": "node --experimental-fetch --loader ts-node/esm ./prepare-env.ts",
     "preinstall": "cd api && npm install",
     "dev": "npm run prepare-env && vite",
     "build": "npm run prepare-env && vite build && gulp licenses",
     "preview": "vite preview",
-    "azure-func": "cd api && npm run watch"
+    "start" : "npx @azure/static-web-apps-cli start https://localhost:5173 -s -e localhost.lesmuids.windows-ext.pem -k localhost.lesmuids.windows-ext.key -p 8788 --api-location ./api --run 'npm run dev'",
+    "prestart": "cd api && npm run watch &"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.22.4",
