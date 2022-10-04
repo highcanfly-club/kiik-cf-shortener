@@ -15,6 +15,12 @@ const auth0Conf = {
       if (err) return console.log(err);
     }
   );
+  fs.writeFile('./api/config/auth0-conf.json',
+  JSON.stringify(auth0Conf),
+  'utf8', function (err) {
+    if (err) return console.log(err);
+  }
+);
 
   export interface Auth0JWKS {
     alg: string;
@@ -59,6 +65,14 @@ const auth0Conf = {
     const jwks = await getJwks();
     fs.writeFile(
       "./src/config/jwks.json",
+      JSON.stringify(jwks),
+      "utf8",
+      function (err) {
+        if (err) return console.log(err);
+      }
+    );
+    fs.writeFile(
+      "./api/config/jwks.json",
       JSON.stringify(jwks),
       "utf8",
       function (err) {
