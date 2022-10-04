@@ -41,17 +41,17 @@ const routes = [
     component: () => import("@/auth0/ListShortLinks.vue"),
     name: "list short links",
   },
-  {
-    path: "/:pathMatch(.*)*",
-    name: "default",
-    redirect: (to) => {
-      console.log(to);
-      window.location.href = `${
-        window.location.origin
-      }/api/redirect?to=${to.path.substring(1)}`;
-      return {};
-    },
-  },
+  // {
+  //   path: "/:pathMatch(.*)*",
+  //   name: "default",
+  //   redirect: (to) => {
+  //     console.log(to);
+  //     window.location.href = `${
+  //       window.location.origin
+  //     }/api/redirect?to=${to.path.substring(1)}`;
+  //     return {};
+  //   },
+  // },
 ] as RouteRecordRaw[];
 
 const router = createRouter({

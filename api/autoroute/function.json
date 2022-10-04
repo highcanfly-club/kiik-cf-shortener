@@ -5,10 +5,9 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "route": "api/add-short-url",
+      "route": "{link:regex(^![abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-]{{5}}$)}",
       "methods": [
-        "get",
-        "post"
+        "get"
       ]
     },
     {
@@ -17,5 +16,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../dist/add-short-url/index.js"
+  "scriptFile": "../dist/redirect/index.js"
 }

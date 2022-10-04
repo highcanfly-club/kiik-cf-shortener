@@ -5,6 +5,7 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
+      "route": "api/redirect",
       "methods": [
         "get",
         "post"
