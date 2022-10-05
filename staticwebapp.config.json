@@ -5,8 +5,7 @@
     "routes": [
         {
             "route": "/!*",
-            "rewrite": "/api/redirect",
-            "statusCode": 201
+            "rewrite": "/api/redirect"
         }
     ]
 }
