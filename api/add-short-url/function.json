@@ -5,7 +5,7 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
-      "route": "api/add-short-url",
+      "route": "add-short-url",
       "methods": [
         "get",
         "post"
