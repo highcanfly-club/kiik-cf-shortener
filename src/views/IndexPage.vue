@@ -12,8 +12,8 @@ This website use:
       <div id="title">
         <div class="">
           <p class="text-3xl font-neutra-bold text-ambblue-800 tracking-widest">{{ $t('master_company') }} <span
-              class="text-[#41195E]">K</span><span class="text-[#CB3F1F]">i</span><span
-              class="text-[#C1091E]">i</span><span class="inline-block -scale-x-100 -ml-1 text-[#237331]">K</span></p>
+              class="text-kiikviolet">K</span><span class="text-kiikorange">i</span><span
+              class="text-kiikrose">i</span><span class="inline-block -scale-x-100 -ml-1 text-kiikvert">K</span></p>
           <p class="text-3xl font-neutra-demiitalic uppercase text-ambblue-100">{{ $t('product_name') }}</p>
         </div>
       </div>

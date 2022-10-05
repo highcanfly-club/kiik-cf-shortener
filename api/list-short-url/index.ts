@@ -12,7 +12,6 @@ const httpTrigger: AzureFunction = async function (
 ): Promise<void> {
   const auth0Domain: string = process.env.AUTH0_DOMAIN;
   let response = { body: null as string };
-  context.log.info(request)
   const authorizationHeader = request.headers["authorization"];
   const jwtToken: string =
     parseTokenFromAuthorizationHeader(authorizationHeader);
@@ -23,6 +22,7 @@ const httpTrigger: AzureFunction = async function (
       Date.now() / 1000,
       AUTH0_PERMISSION.list_all_short_url
     );
+    context.log.info(`has ${AUTH0_PERMISSION.list_all_short_url}:${hasPermission}`)
     if (hasPermission !== false) {
       const items = await listAllLinks(auth0Domain);
       response.body = JSON.stringify(items);

@@ -69,7 +69,7 @@ const REDIRECT_CALLBACK: RedirectCallback = () =>
   window.history.replaceState(
     {},
     document.title,
-    `${window.location.origin}/login`
+    `${window.location.origin}/`
   );
 
 app.config.globalProperties.$auth0 = initAuth0({
