@@ -9,6 +9,7 @@
     - an Application defined at Auth0
     - an API defined at Auth0 with add:any_short_url and list:any_short_url permissions
     - a user or a way to automatic add it
+    - 
 - defines this environment variable at Azure and as Github secrets
 ```javascript
     "COSMOSDB_ENDPOINT": "https://ACCOUNT.documents.azure.com:443/",
