@@ -11,7 +11,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         to = context.bindingData.link
     }else if (req.headers["x-ms-original-url"]){
         const originalUrl = new URL (req.headers["x-ms-original-url"])
-        to = originalUrl.pathname.substring(2) // remove /!
+        to = originalUrl.pathname.substring(2) // remove /! from inout
     }
     try{
         console.log(`to:${to}`)
