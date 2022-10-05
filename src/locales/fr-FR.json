@@ -30,5 +30,7 @@
   "target": "cible",
   "total-cost": "Coût total 0€",
   "week": "semaine|semaines",
-  "year": "année|années"
+  "year": "année|années",
+  "permissions": "autorisations",
+  "validity": "validité"
 }

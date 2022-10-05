@@ -17,7 +17,7 @@
   "Follow": "Follow",
   "Hosting": "Hosting",
   "contact": "contact",
-  "email": "info@kiik.cf",
+  "email": "info{'@'}kiik.cf",
   "c-ronan-le-meillat": "© Ronan Le Meillat",
   "disclaimer": "Keep in mind that this is provided as is for education only under MIT license",
   "github": "Github",
@@ -30,5 +30,7 @@
   "master_company": "SCTG",
   "check-token": "check token",
   "log-out": "Log out",
-  "log-in": "Log in"
+  "log-in": "Log in",
+  "validity": "validity",
+  "permissions": "permissions"
 }
