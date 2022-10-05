@@ -11,100 +11,16 @@ This website use:
   <!-- Check that the SDK client is not currently loading before accessing is methods -->
   <!-- show login when not authenticated -->
   <div v-if="error">{{ error }}: {{ error_description }}</div>
-  <button v-if="!$auth0.isAuthenticated.value" @click="login" class="
-      bg-camelot-500
-      text-white
-      active:bg-slate-50
-      text-xs
-      font-bold
-      uppercase
-      px-4
-      py-2
-      rounded
-      shadow
-      hover:shadow-md
-      outline-none
-      focus:outline-none
-      lg:mr-1 lg:mb-0
-      ml-3
-      mb-3
-      ease-linear
-      transition-all
-      duration-150
-    " type="button">
-    Log in
-  </button>
+  <div  v-if="!$auth0.isAuthenticated.value">
+    <light-button @click="login" text="Log in"/>
+  </div>
+  <div  v-if="$auth0.isAuthenticated.value">
+    <light-button class="mr-4" @click="logout" :text="`Log out ( ${ $auth0.user.value === undefined ? '' : $auth0.user.value.name } )`"/>
+    <light-button class="mr-4" @click="verifyToken()" text="check token"/>
+  </div>
   <div v-if="$auth0.isAuthenticated.value">
     <!-- show logout when authenticated -->
-    <button class="
-        bg-camelot-500
-        text-white
-        active:bg-slate-50
-        text-xs
-        font-bold
-        uppercase
-        px-4
-        py-2
-        rounded
-        shadow
-        hover:shadow-md
-        outline-none
-        focus:outline-none
-        lg:mr-1 lg:mb-0
-        ml-3
-        mb-3
-        ease-linear
-        transition-all
-        duration-150
-      " @click="logout">
-      Log out ( {{ $auth0.user.value === undefined ? "" : $auth0.user.value.name }} )
-    </button>
-    <button class="
-        bg-camelot-500
-        text-white
-        active:bg-slate-50
-        text-xs
-        font-bold
-        uppercase
-        px-4
-        py-2
-        rounded
-        shadow
-        hover:shadow-md
-        outline-none
-        focus:outline-none
-        lg:mr-1 lg:mb-0
-        ml-3
-        mb-3
-        ease-linear
-        transition-all
-        duration-150
-      " @click="verifyToken()">
-      check token
-    </button>
-    <button v-if="false" class="
-        bg-camelot-500
-        text-white
-        active:bg-slate-50
-        text-xs
-        font-bold
-        uppercase
-        px-4
-        py-2
-        rounded
-        shadow
-        hover:shadow-md
-        outline-none
-        focus:outline-none
-        lg:mr-1 lg:mb-0
-        ml-3
-        mb-3
-        ease-linear
-        transition-all
-        duration-150
-      " @click="getSanityToken">
-      get sanity token
-    </button>
+
     <p v-if="access_token_valid" class="text-slate-700 pt-8 text-normal font-mono break-all text-justify"
       @click="showAcessToken()">
       access_token (validité: {{(access_token_payload !== undefined) && (access_token_payload.exp !== undefined) ? (new
@@ -141,6 +57,7 @@ import {
 } from "./TokenHelper";
 import * as jose from "jose";
 import type { Auth0Instance } from "./instance";
+import LightButton from "@/components/ui/LightButton.vue";
 
 const $auth0 = getCurrentInstance().appContext.app.config.globalProperties.$auth0 as Auth0Instance
 const route = useRoute() ; route.query

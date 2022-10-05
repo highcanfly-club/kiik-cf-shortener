@@ -12,7 +12,7 @@ import { createWebHistory, createRouter, RouteRecordRaw } from "vue-router";
 import type { Auth0Instance, RedirectCallback } from "@/auth0";
 import { initAuth0 } from "@/auth0";
 import auth0conf from "@/config/auth0-conf.json";
-import "@/index.css";
+import "@/index.scss";
 
 declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
@@ -78,6 +78,6 @@ const REDIRECT_CALLBACK: RedirectCallback = () =>
 
 app.config.globalProperties.$auth0 = initAuth0({
   onRedirectCallback: REDIRECT_CALLBACK,
-  redirectUri: `${window.location.origin}/login`,
+  redirectUri: `${window.location.origin}/`,
   ...auth0conf,
 } as never); // never because cacheLocation:"localstorage" is typed as string but as CacheLocation = "localstorage" | "memory" in Auth0SDK

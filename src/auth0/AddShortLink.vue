@@ -10,7 +10,7 @@ This website use:
 <template>
   <div>
     <h3 class="text-slate-800" v-if="formerrors.length">
-      <b>Formulaire erronné</b>
+      <b>Error in form</b>
       <ul>
         <li v-for="error in formerrors" :key="error">
           <!-- eslint-disable-line -->
@@ -19,16 +19,16 @@ This website use:
       </ul>
     </h3>
     <form v-if="canAddShortUrl" @submit="checkForm" @submit.prevent="submitForm">
-      <label for="longurl" class="mb-3 block text-slate-800">
-        Longue URL
+      <label for="longurl" class="mt-1 block text-slate-800">
+        Long URL
       </label>
-      <input type="text" name="longurl" v-model="longurl" id="longurl" placeholder="Entrez l'URL longue"
-        class="w-full bg-slate-200 rounded border text-slate-800 focus:bg-slate-400" />
+      <input type="text" name="longurl" v-model="longurl" id="longurl" placeholder="Enter the long URL"
+        class="w-full bg-slate-200 rounded border text-slate-800 focus:bg-slate-400 mb-2" />
       <template v-if="expiration == 0">
-        <label for="description" class="mb-3 block text-slate-800">
+        <label for="description" class="mt-1 block text-slate-800">
           Description
         </label>
-        <input type="text" name="description" v-model="description" id="description" placeholder="Entrez la description"
+        <input type="text" name="description" v-model="description" id="description" placeholder="Enter its description"
           class="
             w-full
             bg-slate-200
@@ -36,8 +36,9 @@ This website use:
             border
             text-slate-800
             focus:bg-slate-400
+            mb-2
           " />
-        <label for="ttl" class="mb-3 block text-slate-800">
+        <label for="ttl" class="m1-1 block text-slate-800">
           Expiration
         </label>
         <select name="ttl" id="input-ttl" v-model="linkTtl" class="
@@ -48,41 +49,22 @@ This website use:
             text-slate-800
             focus:bg-slate-400
           ">
-          <option value="3600">1 heure</option>
-          <option value="21600">6 heures</option>
-          <option value="43200">12 heures</option>
+          <option value="3600">1 hour</option>
+          <option value="21600">6 hours</option>
+          <option value="43200">12 hours</option>
           <option value="86400" selected>
-            1 jour
+            1 day
           </option>
-          <option value="604800">1 semaine</option>
-          <option value="2592000">1 mois</option>
-          <option value="15778476">6 mois</option>
-          <option value="31556952">1 an</option>
-          <option value="2145872736">68 ans</option>
+          <option value="604800">1 week</option>
+          <option value="2592000">1 month</option>
+          <option value="15778476">6 months</option>
+          <option value="31556952">1 year</option>
+          <option value="2145872736">68 years</option>
         </select>
-        <button v-if="!formVerified" type="submit" class="
-            bg-camelot-500
-            text-slate-800
-            active:bg-slate-50
-            text-xs
-            font-bold
-            uppercase
-            px-4
-            py-2
-            rounded
-            shadow
-            hover:shadow-md
-            outline-none
-            focus:outline-none
-            lg:mr-1 lg:mb-0
-            ml-3
-            mb-3
-            ease-linear
-            transition-all
-            duration-150
-          ">
-          Ajouter
-        </button>
+        <div v-if="!formVerified" class="mt-4" >
+          <light-button text="Add" type="submit"/>
+          <h-r-dotted/>
+        </div>
       </template>
       <template v-else>
         <router-link :to="`/!${slug}`">{{
@@ -98,6 +80,8 @@ import { getCurrentInstance, ref } from "vue";
 import { isAllowed, AUTH0_PERMISSION } from "./TokenHelper";
 import jwks from "@/config/jwks.json";
 import { Auth0Instance } from "./instance";
+import LightButton from "@/components/ui/LightButton.vue";
+import HRDotted from "@/components/ui/HRDotted.vue";
 
 const $auth0 = getCurrentInstance().appContext.app.config.globalProperties.$auth0 as Auth0Instance
 const token = ref("");
