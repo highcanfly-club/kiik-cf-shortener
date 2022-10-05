@@ -10,7 +10,7 @@ This website use:
 <template>
   <div>
     <h3 class="text-slate-800" v-if="formerrors.length">
-      <b>Error in form</b>
+      <b>{{ $t('error-in-form') }}</b>
       <ul>
         <li v-for="error in formerrors" :key="error">
           <!-- eslint-disable-line -->
@@ -20,15 +20,15 @@ This website use:
     </h3>
     <form v-if="canAddShortUrl" @submit="checkForm" @submit.prevent="submitForm">
       <label for="longurl" class="mt-1 block text-slate-800">
-        Long URL
+        {{ $t('long-url') }}
       </label>
-      <input type="text" name="longurl" v-model="longurl" id="longurl" placeholder="Enter the long URL"
+      <input type="text" name="longurl" v-model="longurl" id="longurl" :placeholder="$t('enter-the-long-url')"
         class="w-full bg-slate-200 rounded border text-slate-800 focus:bg-slate-400 mb-2" />
       <template v-if="expiration == 0">
         <label for="description" class="mt-1 block text-slate-800">
-          Description
+          {{ $t('description') }}
         </label>
-        <input type="text" name="description" v-model="description" id="description" placeholder="Enter its description"
+        <input type="text" name="description" v-model="description" id="description" :placeholder="$t('enter-description')"
           class="
             w-full
             bg-slate-200
@@ -39,7 +39,7 @@ This website use:
             mb-2
           " />
         <label for="ttl" class="m1-1 block text-slate-800">
-          Expiration
+          {{ $t('expiration') }}
         </label>
         <select name="ttl" id="input-ttl" v-model="linkTtl" class="
             text-xs
@@ -49,20 +49,20 @@ This website use:
             text-slate-800
             focus:bg-slate-400
           ">
-          <option value="3600">1 hour</option>
-          <option value="21600">6 hours</option>
-          <option value="43200">12 hours</option>
+          <option value="3600">1 {{$t('hour',1)}}</option>
+          <option value="21600">6 {{$t('hour',2)}}</option>
+          <option value="43200">12 {{$t('hour',2)}}</option>
           <option value="86400" selected>
-            1 day
+            1 {{$t('day',1)}}
           </option>
-          <option value="604800">1 week</option>
-          <option value="2592000">1 month</option>
-          <option value="15778476">6 months</option>
-          <option value="31556952">1 year</option>
-          <option value="2145872736">68 years</option>
+          <option value="604800">1 {{$t('week',1)}}</option>
+          <option value="2592000">1 {{$t('month',1)}}</option>
+          <option value="15778476">6 {{$t('month',2)}}</option>
+          <option value="31556952">1 {{$t('year',1)}}</option>
+          <option value="2145872736">68 {{$t('year',2)}}</option>
         </select>
         <div v-if="!formVerified" class="mt-4" >
-          <light-button text="Add" type="submit"/>
+          <light-button :text="$t('add')" type="submit"/>
           <h-r-dotted/>
         </div>
       </template>

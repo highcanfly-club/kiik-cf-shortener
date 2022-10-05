@@ -12,11 +12,11 @@ This website use:
   <!-- show login when not authenticated -->
   <div v-if="error">{{ error }}: {{ error_description }}</div>
   <div  v-if="!$auth0.isAuthenticated.value">
-    <light-button @click="login" text="Log in"/>
+    <light-button @click="login" :text="$t('log-in')"/>
   </div>
   <div  v-if="$auth0.isAuthenticated.value">
-    <light-button class="mr-4" @click="logout" :text="`Log out ( ${ $auth0.user.value === undefined ? '' : $auth0.user.value.name } )`"/>
-    <light-button class="mr-4" @click="verifyToken()" text="check token"/>
+    <light-button class="mr-4" @click="logout" :text="`${$t('log-out')} ( ${ $auth0.user.value === undefined ? '' : $auth0.user.value.name } )`"/>
+    <light-button class="mr-4" @click="verifyToken()" :text="$t('check-token')"/>
   </div>
   <div v-if="$auth0.isAuthenticated.value">
     <!-- show logout when authenticated -->

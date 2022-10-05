@@ -12,7 +12,15 @@ import { createWebHistory, createRouter, RouteRecordRaw } from "vue-router";
 import type { Auth0Instance, RedirectCallback } from "@/auth0";
 import { initAuth0 } from "@/auth0";
 import auth0conf from "@/config/auth0-conf.json";
+import { createI18n } from "vue-i18n"
+import { createPinia } from 'pinia'
 import "@/index.scss";
+
+import frFR from '@/locales/fr-FR.json'
+import enUS from '@/locales/en-US.json'
+
+type MessageSchema = typeof frFR
+type Messages = {"fr-FR"?:MessageSchema;"en-US"?:MessageSchema;"es-ES"?:MessageSchema;"pt-PT"?:MessageSchema}
 
 declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
@@ -29,6 +37,16 @@ const routes = [
 
 ] as RouteRecordRaw[];
 
+const i18n = createI18n<[MessageSchema | string], 'fr-FR' | 'en-US'>({
+  locale: 'en-US',
+  legacy: false,
+  fallbackLocale: 'fr-FR',
+  messages: {
+      'fr-FR': frFR,
+      'en-US': enUS, //will be lazily loaded in HeaderMain/changeLang(locale)
+  }
+}) 
+
 const router = createRouter({
   scrollBehavior(to) {
     if (to.hash) {
@@ -41,8 +59,11 @@ const router = createRouter({
   routes,
 });
 
+const pinia = createPinia()
 const app = createApp(App);
-app.use(router).mount("#app");
+
+app.use(pinia).use(i18n).use(router)
+app.mount("#app");
 
 const REDIRECT_CALLBACK: RedirectCallback = () =>
   window.history.replaceState(
