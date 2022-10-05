@@ -136,6 +136,7 @@ module.exports = {
       fontSize: {
         55: "55rem",
         xs: ".75rem",
+        xxs: ".5rem",
       },
       fontFamily: {
         "neutra-bold": ["NeutrafaceText-Bold"],
@@ -157,8 +158,8 @@ module.exports = {
       zIndex: {
         2: 2,
         3: 3,
-        998:998,
-        999:999
+        998: 998,
+        999: 999,
       },
       inset: {
         "-100": "-100%",
@@ -179,9 +180,9 @@ module.exports = {
         "1/5": "20%",
       },
       height: {
-        "120": "30rem",
-        "140": "35rem",
-        "160": "40rem",
+        120: "30rem",
+        140: "35rem",
+        160: "40rem",
         "95-px": "95px",
         "70-px": "70px",
         "350-px": "350px",
@@ -240,9 +241,9 @@ module.exports = {
         "screen-1/8": "calc(100vh / 8)",
         "screen-11/25": "calc(11*100vh / 25)",
       },
-      width:{
-        "92": "23rem",
-        "94": "23.5rem"
+      width: {
+        92: "23rem",
+        94: "23.5rem",
       },
       maxWidth: {
         "100-px": "100px",
@@ -269,14 +270,15 @@ module.exports = {
         100: "25rem",
       },
       aspectRatio: {
-        '4/3': '4 / 3',
+        "4/3": "4 / 3",
       },
       borderRadius: {
-        '4xl':'2rem',
+        "4xl": "2rem",
       },
       borderWidth: {
-        '3': '3px',
-      }
+        3: "3px",
+        6: "6px",
+      },
     },
   },
   variants: [
