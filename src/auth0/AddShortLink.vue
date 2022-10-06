@@ -49,6 +49,7 @@ This website use:
             text-slate-800
             focus:bg-slate-400
           ">
+          <option value="60">60 {{$t('second',2)}}</option>
           <option value="3600">1 {{$t('hour',1)}}</option>
           <option value="21600">6 {{$t('hour',2)}}</option>
           <option value="43200">12 {{$t('hour',2)}}</option>

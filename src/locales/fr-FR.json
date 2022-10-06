@@ -32,5 +32,8 @@
   "week": "semaine|semaines",
   "year": "année|années",
   "permissions": "autorisations",
-  "validity": "validité"
+  "validity": "validité",
+  "second": "seconde|secondes",
+  "mask-token": "cache le token",
+  "nav_lang": "langue"
 }
