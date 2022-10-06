@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@azure/static-web-apps-cli": "^1.0.2",
+    "@babel/types": "^7.19.3",
     "@fullhuman/postcss-purgecss": "^5.0.0",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.7",

@@ -18,7 +18,7 @@ const httpTrigger: AzureFunction = async function (
 ): Promise<void> {
   let response = {};
   const auth0Domain: string = process.env.AUTH0_DOMAIN;
-  const authorizationHeader = request.headers["authorization"];
+  const authorizationHeader = request.headers["auth0-authorization"]; //authorization is those from Azure
   const jwtToken: string =
     parseTokenFromAuthorizationHeader(authorizationHeader);
   if (jwtToken !== null) {
