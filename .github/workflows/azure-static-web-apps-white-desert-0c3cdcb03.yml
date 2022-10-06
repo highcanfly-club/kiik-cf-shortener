@@ -22,6 +22,11 @@ jobs:
             AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
             AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
             AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+            AUTH0_CUSTOM_NAMESPACE: ${{ secrets.AUTH0_CUSTOM_NAMESPACE }}
+            COSMOSDB_ENDPOINT: ${{ secrets.COSMOSDB_ENDPOINT }}
+            COSMOSDB_KEY: ${{ secrets.COSMOSDB_KEY }}
+            COSMOSDB_DATABASE: ${{ secrets.COSMOSDB_DATABASE }}
+            COSMOSDB_COLLECTION: ${{ secrets.COSMOSDB_COLLECTION }}
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_WHITE_DESERT_0C3CDCB03 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
