@@ -39,3 +39,4 @@ l*.pem
 l*.key
 
 src/assets/typo
+jwks.json

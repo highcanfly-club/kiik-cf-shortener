@@ -6,9 +6,10 @@
   - An Azure subscription (even free one)
   - A CosmosDB container (free tier is OK)
   - An Auth0 account (free is OK)
-    - an Application defined at Auth0
-    - an API defined at Auth0 with add:any_short_url and list:any_short_url permissions
-    - a user or a way to automatic add it
+    - an Application defined at Auth0 with RS256 / RBAC
+    - an API defined at Auth0 with add:any_short_url and list:any_short_url permissions (be sure to send permissions in the access token)
+    - a user or a way to automatic add it  
+
 - defines this environment variable at Azure and as Github secrets
 ```javascript
     "COSMOSDB_ENDPOINT": "https://ACCOUNT.documents.azure.com:443/",
@@ -20,8 +21,9 @@
     "AUTH0_CLIENT_SECRET": "auth0 client secret",
     "AUTH0_CUSTOM_NAMESPACE": "https://yourdomain.tld"
 ```
-- deploy to Azure Static Web with the VSCode Azure functions or the swa CLI
 
+- deploy to Azure Static Web with the VSCode Azure functions or the swa CLI
+- for running locally you need to define the environment variables and issue npm run prepare-env before running npm start
 
 ### Recommended IDE Setup
 
