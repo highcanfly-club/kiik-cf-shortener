@@ -21,9 +21,9 @@ This website use:
     </div>
     <div id="subtitle" class="mt-4 flex">
       <h3 class="text-lg font-neutra-bold uppercase tracking-widest text-ambgrey-900 mr-2"><i
-          class="fas fa-star-extra-sharp text-ambred-500 mr-1"></i>{{ $t('simple-link-shortener') }}</h3>
+          class="fas fa-star-extra-sharp text-ambred-500 mr-1"></i>{{ $t('simple_link_shortener') }}</h3>
       <h2 class="text-lg font-neutra-demiitalic uppercase tracking-widest text-ambgrey-100">
-        {{ $t('only-for-us') }}
+        {{ $t('only_for_us') }}
       </h2>
     </div>
     <h-r-dotted />
@@ -34,8 +34,8 @@ This website use:
         <p class="text-base font-neutra-demiitalic text-ambblue-100 tracking-widest">{{ $t('Follow') }}: <a
             href="https://github.com/highcanfly-club/kiik-cf-shortener">{{ $t('repository') }}</a></p>
         <p class="text-base font-neutra-book capitalize text-ambgrey-900">{{ $t('Hosting') }}: <a
-            href="https://azure.microsoft.com">{{ $t('azure-static-web-app') }}</a></p>
-        <p class="text-xs tracking-wide font-neutra-book text-ambgrey-900">{{ $t('total-cost') }}</p>
+            href="https://azure.microsoft.com">{{ $t('azure_static_web_app') }}</a></p>
+        <p class="text-xs tracking-wide font-neutra-book text-ambgrey-900">{{ $t('total_cost') }}</p>
       </div>
       <div id="3blocks2">
         <light-button @click="redirect('https://highcanfly.club')" text="High Can Fly" />
@@ -54,7 +54,7 @@ This website use:
         <div class="font-neutra-demiitalic  text-ambblue-800"><a :href="`mailto:${$t('email')}`">{{ $t('email') }}</a></div>
       </div>
       <div class="mt-4 border-l-6 border-b-6 border-ambblue-100 px-4 py-1 w-fit h-fit bg-white absolute right-0 z-3 ">
-        <div class="font-neutra-demi text-ambblue-100">{{ $t('c-ronan-le-meillat') }}</div>
+        <div class="font-neutra-demi text-ambblue-100">{{ $t('c_ronan_le_meillat') }}</div>
       </div>
       <div class="mt-4 px-3 py-1 w-32 h-fit absolute right-0 top-10 z-10 ">
         <div class="font-neutra-booksc text-justify leading-tight text-xxs tracking-wide text-ambgrey-200">{{ $t('disclaimer') }}</div>

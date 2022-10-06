@@ -16,11 +16,10 @@ import { createI18n } from "vue-i18n"
 import { createPinia } from 'pinia'
 import "@/index.scss";
 
-import frFR from '@/locales/fr-FR.json'
 import enUS from '@/locales/en-US.json'
 
-type MessageSchema = typeof frFR
-type Messages = {"fr-FR"?:MessageSchema;"en-US"?:MessageSchema;"es-ES"?:MessageSchema;"pt-PT"?:MessageSchema}
+type MessageSchema = typeof enUS
+type Messages = {"fr-FR"?:MessageSchema;"en-US"?:MessageSchema;}
 
 declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
@@ -43,8 +42,8 @@ const i18n = createI18n<[MessageSchema | string], 'fr-FR' | 'en-US'>({
   legacy: false,
   fallbackLocale: 'fr-FR',
   messages: {
-      'fr-FR': frFR,
-      'en-US': enUS, //will be lazily loaded in HeaderMain/changeLang(locale)
+      'fr-FR': '', //will be lazily loaded in HeaderMain/changeLang(locale)
+      'en-US': enUS,
   }
 }) 
 

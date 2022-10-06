@@ -12,15 +12,15 @@ This website use:
   <!-- show login when not authenticated -->
   <div v-if="error">{{ error }}: {{ error_description }}</div>
   <div  v-if="!$auth0.isAuthenticated.value">
-    <light-button @click="login" :text="$t('log-in')"/>
+    <light-button @click="login" :text="$t('log_in')"/>
   </div>
   <div  v-if="$auth0.isAuthenticated.value">
-    <light-button class="mr-4" @click="logout" :text="`${$t('log-out')} ( ${ $auth0.user.value === undefined ? '' : $auth0.user.value.name } )`"/>
+    <light-button class="mr-4" @click="logout" :text="`${$t('log_out')} ( ${ $auth0.user.value === undefined ? '' : $auth0.user.value.name } )`"/>
     <span v-if="!access_token_valid">
-      <light-button class="mr-4" @click="verifyToken()" :text="$t('check-token')"/>
+      <light-button class="mr-4" @click="verifyToken()" :text="$t('check_token')"/>
     </span>
     <span v-else>
-      <light-button class="mr-4" @click="access_token_valid = id_token_valid = !access_token_valid" :text="$t('mask-token')"/>
+      <light-button class="mr-4" @click="access_token_valid = id_token_valid = !access_token_valid" :text="$t('mask_token')"/>
     </span>
   </div>
   <div v-if="$auth0.isAuthenticated.value">

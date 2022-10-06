@@ -3,7 +3,7 @@
     <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-          <th scope="col" class="py-3 px-6">{{ $t('short-link') }}</th>
+          <th scope="col" class="py-3 px-6">{{ $t('short_link') }}</th>
           <th scope="col" class="py-3 px-6">{{ $t('target') }}</th>
           <th scope="col" class="py-3 px-6">{{ $t('description') }}</th>
           <th scope="col" class="py-3 px-6">{{ $t('expiration') }}</th>
