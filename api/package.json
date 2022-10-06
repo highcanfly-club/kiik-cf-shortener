@@ -2,6 +2,9 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": ">=16.14.2"
+  },
   "scripts": {
     "prepare-env": "node --experimental-fetch --loader ts-node/esm ./prepare-env.ts",
     "build": "npm run prepare-env && tsc",
