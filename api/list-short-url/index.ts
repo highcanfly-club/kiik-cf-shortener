@@ -5,6 +5,7 @@ import {
   parseTokenFromAuthorizationHeader,
   AUTH0_PERMISSION,
 } from "../common/auth0/TokenHelper";
+import { h } from "vue";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
@@ -16,10 +17,11 @@ const httpTrigger: AzureFunction = async function (
   const jwtToken: string =
     parseTokenFromAuthorizationHeader(authorizationHeader);
   if (jwtToken !== null) {
+    const now =  Date.now() / 1000
     const hasPermission: boolean = await isAllowed(
       jwtToken,
       auth0Domain,
-      Date.now() / 1000,
+      now,
       AUTH0_PERMISSION.list_all_short_url
     );
     context.log.info(`has ${AUTH0_PERMISSION.list_all_short_url}:${hasPermission}`)
@@ -28,7 +30,7 @@ const httpTrigger: AzureFunction = async function (
       response.body = JSON.stringify(items);
     }
     else{
-        response.body = JSON.stringify({ error: "WRONG PERMISSION" })
+        response.body = JSON.stringify({ error: "WRONG PERMISSION", hasPermission: hasPermission,auth0Domain: auth0Domain, now: now, token: jwtToken, permission: AUTH0_PERMISSION.list_all_short_url })
     }
   }else{
     response.body = JSON.stringify({ error: "NO TOKEN" })
