@@ -8,7 +8,7 @@
   },
   "scripts": {
     "prepare-env": "node --experimental-fetch --loader ts-node/esm ./prepare-env.ts && echo '//DON T EDIT THIS FILE IT IS A COPY OF src/auth0/TokenHelper.ts' > api/common/auth0/TokenHelper.ts && cat src/auth0/TokenHelper.ts >> api/common/auth0/TokenHelper.ts",
-    "preinstall": "cd api && npm install",
+    "_preinstall": "cd api && npm install",
     "dev": "npm run prepare-env && vite",
     "convert-typo": "node --loader ts-node/esm ./typo/generate-webfonts.ts",
     "build": "npm run convert-typo && npm run prepare-env && vite build && gulp licenses",
