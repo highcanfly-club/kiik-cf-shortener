@@ -10,7 +10,7 @@ This website use:
 import * as jose from 'jose'
 import { GetTokenSilentlyVerboseResponse } from '@auth0/auth0-spa-js'
 
-import * as jwks from '../config/jwks.json'
+import jwks from '../config/jwks.json' assert { type: "json" };
 const x509cert = `-----BEGIN CERTIFICATE-----\n${jwks.keys[0].x5c}\n-----END CERTIFICATE-----`
 const algorithm = 'RS256'
 
