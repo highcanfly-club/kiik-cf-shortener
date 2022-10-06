@@ -1,14 +1,11 @@
 {
-    "globalHeaders": {
-        "content-security-policy": "default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'"
-    },
-    "routes": [
-        {
-            "route": "/!*",
-            "rewrite": "/api/redirect"
-        }
-    ],
-    "platform": {
-        "apiRuntime": "node:16"
-      }
+  "routes": [
+    {
+      "route": "/!*",
+      "rewrite": "/api/redirect"
+    }
+  ],
+  "platform": {
+    "apiRuntime": "node:16"
+  }
 }
