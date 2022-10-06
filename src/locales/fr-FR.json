@@ -34,6 +34,6 @@
   "permissions": "autorisations",
   "validity": "validité",
   "second": "seconde|secondes",
-  "mask-token": "cache le token",
+  "mask-token": "cacher le jeton",
   "nav_lang": "langue"
 }
