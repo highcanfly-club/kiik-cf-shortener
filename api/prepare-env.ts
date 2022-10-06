@@ -9,12 +9,12 @@ const auth0Conf = {
     "cacheLocation": "localstorage",
     "audience": "https://kiik.api"
   };
-  fs.writeFile('./src/config/auth0-conf.json',
-    JSON.stringify(auth0Conf),
-    'utf8', function (err) {
-      if (err) return console.log(err);
-    }
-  );
+  fs.writeFile('./common/config/auth0-conf.json',
+  JSON.stringify(auth0Conf),
+  'utf8', function (err) {
+    if (err) return console.log(err);
+  }
+);
 
   export interface Auth0JWKS {
     alg: string;
@@ -58,7 +58,7 @@ const auth0Conf = {
   (async () => {
     const jwks = await getJwks();
     fs.writeFile(
-      "./src/config/jwks.json",
+      "./common/config/jwks.json",
       JSON.stringify(jwks),
       "utf8",
       function (err) {

@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "tsc",
+    "prepare-env": "node --experimental-fetch --loader ts-node/esm ./prepare-env.ts",
+    "build": "npm run prepare-env && tsc",
     "watch": "tsc -w",
     "prestart": "npm run build",
     "start": "func start",
