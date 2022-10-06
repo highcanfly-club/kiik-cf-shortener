@@ -20,7 +20,7 @@ This website use:
     </h3>
     <form v-if="canAddShortUrl" @submit="checkForm" @submit.prevent="submitForm">
       <label for="longurl" class="mt-1 block text-slate-800">
-        {{ $t('long-url') }}
+        {{ $t('long_url') }}
       </label>
       <input type="text" name="longurl" v-model="longurl" id="longurl" :placeholder="$t('enter_the_long_url')"
         class="w-full bg-slate-200 rounded border text-slate-800 focus:bg-slate-400 mb-2" />

@@ -1,10 +1,10 @@
 {
-  "short-link": "Short link",
+  "short_link": "Short link",
   "description": "Description",
   "expiration": "Expiration",
   "target": "target",
   "error_in_form": "Error in form",
-  "long-url": "Long URL",
+  "long_url": "Long URL",
   "enter_the_long_url": "Enter the long URL",
   "hour": "hour|hours",
   "month": "month|months",
