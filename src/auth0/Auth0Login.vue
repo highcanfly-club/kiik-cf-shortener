@@ -16,13 +16,17 @@ This website use:
   </div>
   <div  v-if="$auth0.isAuthenticated.value">
     <light-button class="mr-4" @click="logout" :text="`${$t('log-out')} ( ${ $auth0.user.value === undefined ? '' : $auth0.user.value.name } )`"/>
-    <light-button class="mr-4" @click="verifyToken()" :text="$t('check-token')"/>
+    <span v-if="!access_token_valid">
+      <light-button class="mr-4" @click="verifyToken()" :text="$t('check-token')"/>
+    </span>
+    <span v-else>
+      <light-button class="mr-4" @click="access_token_valid = id_token_valid = !access_token_valid" :text="$t('mask-token')"/>
+    </span>
   </div>
   <div v-if="$auth0.isAuthenticated.value">
-    <!-- show logout when authenticated -->
 
     <p v-if="access_token_valid" class="text-slate-700 pt-8 text-normal font-mono break-all text-justify"
-      @click="showAcessToken()">
+      @click="toggleAcessToken()">
       access_token ({{ $t('validity') }}: {{(access_token_payload !== undefined) && (access_token_payload.exp !== undefined) ? (new
       Date(access_token_payload.exp*1000)).toLocaleString(locale as string) : ""}}):<br />
       {{ $t('permissions') }}
@@ -34,7 +38,7 @@ This website use:
     }}</span>
     </p>
     <p v-if="id_token_valid" class="text-slate-700 pt-8 pb-8 text-normal font-mono break-all text-justify"
-      @click="showIdToken()">
+      @click="toggleIdToken()">
       id_token (validité: {{(id_token_payload !== undefined) && (id_token_payload.exp !== undefined) ? (new
       Date(id_token_payload.exp*1000).toLocaleString(locale as string)) : ""}}):
       <span class="text-xs" :class="show_id_token ? 'inline' : 'hidden'">{{
@@ -66,13 +70,13 @@ const route = useRoute() ; route.query
 const error = ref('' as string)
 const error_description = ref('' as string)
 const access_token = ref('' as string)
-const access_token_valid = ref(null as boolean)
+const access_token_valid = ref(false as boolean)
 const access_token_payload = ref(null as jose.JWTPayload)
 const id_token = ref('' as string)
-const id_token_valid = ref(null as boolean)
+const id_token_valid = ref(false as boolean)
 const id_token_payload = ref(null as jose.JWTPayload)
-const show_access_token = ref(null as boolean)
-const show_id_token = ref(null as boolean)
+const show_access_token = ref(false)
+const show_id_token = ref(false)
 const sanity_token = ref('' as string)
 const { locale } = useI18n({ useScope: 'global' })
 
@@ -97,18 +101,18 @@ if (
       });
     }
 
-    function showAcessToken():void {
+    function toggleAcessToken():void {
       if ((access_token.value === undefined) || (access_token.value.length === 0)) {
         getToken();
       }
-      show_access_token.value = true;
+      show_access_token.value = !show_access_token.value;
     }
 
-    function showIdToken():void {
+    function toggleIdToken():void {
       if ((id_token.value === undefined) || (id_token.value.length === 0)) {
         getToken();
       }
-      show_id_token.value = true;
+      show_id_token.value = !show_id_token.value;
     }
 
     function getToken():void {

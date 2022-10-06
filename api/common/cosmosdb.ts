@@ -89,6 +89,7 @@ export type Item = {
   description: string;
   expiration: number;
   auth0Domain_hash: number;
+  ttl: number;
   id?:string
 };
 
@@ -105,6 +106,7 @@ export const addShortLink = (
     description: description,
     expiration: Date.now() + ttl * 1000,
     auth0Domain_hash: cyrb53(auth0Domain),
+    ttl: ttl,
   };
   return new Promise<string>((resolve,reject) => {
     container.items.create(newItem).then((insertedItem)=>{

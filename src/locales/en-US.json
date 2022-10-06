@@ -32,5 +32,8 @@
   "log-out": "Log out",
   "log-in": "Log in",
   "validity": "validity",
-  "permissions": "permissions"
+  "permissions": "permissions",
+  "second": "second|seconds",
+  "mask-token": "hide token",
+  "nav_lang": "language"
 }

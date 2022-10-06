@@ -48,7 +48,7 @@ This website use:
     <div id="shortenerlogik" class="mt-4">
       <shortener-card />
     </div>
-    <div id="footer" class="flex justify-end relative">
+    <div id="footer" class="flex justify-between relative">
       <div class="mt-4 border-r-6 border-b-6 border-ambblue-100 px-12 py-2  w-fit absolute right-32 z-2">
         <div class="font-neutra-demi uppercase text-ambblue-100">{{ $t('contact') }}</div>
         <div class="font-neutra-demiitalic  text-ambblue-800"><a :href="`mailto:${$t('email')}`">{{ $t('email') }}</a></div>
@@ -60,6 +60,7 @@ This website use:
         <div class="font-neutra-booksc text-justify leading-tight text-xxs tracking-wide text-ambgrey-200">{{ $t('disclaimer') }}</div>
       </div>
     </div>
+    <div class="mt-2 ml-2 text-ambgrey-100 text-xs font-neutra-demi uppercase absolute top-0 left-0"><chang-lang /></div>
   </div>
 
 </template>
@@ -68,6 +69,7 @@ This website use:
 import LightButton from '@/components/ui/LightButton.vue';
 import ShortenerCard from '@/components/cards/ShortenerCard.vue';
 import HRDotted from '../components/ui/HRDotted.vue';
+import ChangLang from '@/utilities/ChangLang.vue';
 
 function redirect(to: string) {
   window.location.href = to
