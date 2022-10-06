@@ -16,7 +16,8 @@
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.22.4",
     "@azure/cosmos": "^3.17.1",
-    "jose": "^4.10.0"
+    "jose": "^4.10.0",
+    "nanoid": "^4.0.0"
   },
   "devDependencies": {
     "@azure/functions": "^3.2.0",
