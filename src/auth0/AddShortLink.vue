@@ -10,7 +10,7 @@ This website use:
 <template>
   <div>
     <h3 class="text-slate-800" v-if="formerrors.length">
-      <b>{{ $t('error-in-form') }}</b>
+      <b>{{ $t('error_in_form') }}</b>
       <ul>
         <li v-for="error in formerrors" :key="error">
           <!-- eslint-disable-line -->
@@ -22,14 +22,14 @@ This website use:
       <label for="longurl" class="mt-1 block text-slate-800">
         {{ $t('long-url') }}
       </label>
-      <input type="text" name="longurl" v-model="longurl" id="longurl" :placeholder="$t('enter-the-long-url')"
+      <input type="text" name="longurl" v-model="longurl" id="longurl" :placeholder="$t('enter_the_long_url')"
         class="w-full bg-slate-200 rounded border text-slate-800 focus:bg-slate-400 mb-2" />
       <template v-if="expiration == 0">
         <label for="description" class="mt-1 block text-slate-800">
           {{ $t('description') }}
         </label>
         <input type="text" name="description" v-model="description" id="description"
-          :placeholder="$t('enter-description')" class="
+          :placeholder="$t('enter_description')" class="
             w-full
             bg-slate-200
             rounded
