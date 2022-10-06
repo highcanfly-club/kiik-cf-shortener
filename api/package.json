@@ -6,7 +6,7 @@
     "node": ">=16.14.2"
   },
   "scripts": {
-    "prepare-env": "node --experimental-fetch --loader ts-node/esm ./prepare-env.ts",
+    "prepare-env": "node --loader ts-node/esm ./prepare-env.ts",
     "build": "npm run prepare-env && tsc",
     "watch": "tsc -w",
     "prestart": "npm run build",
