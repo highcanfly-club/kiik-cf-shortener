@@ -5,6 +5,7 @@
   "engines": {
     "node": ">=16.14.2"
   },
+  "type": "module",
   "scripts": {
     "prepare-env": "node --loader ts-node/esm ./prepare-env.ts",
     "build": "npm run prepare-env && tsc",

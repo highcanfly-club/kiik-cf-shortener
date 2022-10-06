@@ -67,7 +67,6 @@ async function getJwks() {
 
 (async () => {
   const jwks = await getJwks();
-  console.log(JSON.stringify(jwks));
   fs.writeFile(
     "./common/config/jwks.json",
     JSON.stringify(jwks),

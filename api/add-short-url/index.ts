@@ -3,9 +3,9 @@ import {
   isAllowed,
   parseTokenFromAuthorizationHeader,
   AUTH0_PERMISSION,
-} from "../common/auth0/TokenHelper";
+} from "../common/auth0/TokenHelper.js";
 import { customAlphabet } from "nanoid";
-import { addShortLink, isShortLinkExists } from "../common/cosmosdb";
+import { addShortLink, isShortLinkExists } from "../common/cosmosdb.js";
 
 const nanoid = customAlphabet(
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-",
@@ -16,7 +16,7 @@ const httpTrigger: AzureFunction = async function (
   context: Context,
   request: HttpRequest
 ): Promise<void> {
-  let response = {};
+  let response = { body: null as string };
   const auth0Domain: string = process.env.AUTH0_DOMAIN;
   const authorizationHeader = request.headers["auth0-authorization"]; //authorization is those from Azure
   const jwtToken: string =
@@ -29,18 +29,19 @@ const httpTrigger: AzureFunction = async function (
      * 2b - check if now is beetween iat (claim) and exp (expiry)
      * 2c - check if ADD_SHORT_URL is present in permissions[]
      */
+     const now =  Date.now() / 1000
     const hasPermission: boolean = await isAllowed(
       jwtToken,
       auth0Domain,
-      Date.now() / 1000,
+      now,
       AUTH0_PERMISSION.add_short_url
     );
     if (hasPermission !== false) {
-      console.log("permission OK");
+      context.log.info("permission OK");
       let slug: string;
       do {
         slug = nanoid();
-        console.log(slug);
+        context.log.info(slug);
       } while (await isShortLinkExists(slug, auth0Domain)); //ensure that the key is not already registred ()
 
       const requestBody: {
@@ -65,44 +66,28 @@ const httpTrigger: AzureFunction = async function (
             shortened: shortenedURL,
             expiration: Date.now() + 1000 * Number(requestBody.ttl),
           };
-          response = {
-            body: JSON.stringify(responseBody),
-            status: 200,
-            headers: { "content-type": "text/json" },
-          };
+          response.body = JSON.stringify(responseBody);
         } else {
-          response = {
-            body: JSON.stringify({ error: "Error during save" }, null, 3),
-            status: 500,
-            headers: { "content-type": "text/json" },
-          };
+          response.body = JSON.stringify(
+            { error: "Error during save" },
+            null,
+            3
+          );
         }
       } else {
-        response = {
-          body: JSON.stringify({ error: "Error with body" }, null, 3),
-          status: 500,
-          headers: { "content-type": "text/json" },
-        };
+        response.body = JSON.stringify({ error: "Error with body" }, null, 3);
       }
     } else {
       context.log.info("no permission");
-      response = {
-        body: JSON.stringify({ error: "JWT invalid" }, null, 3),
-        status: 403,
-        headers: { "content-type": "text/json" },
-      };
+      response.body = JSON.stringify({ error: "WRONG PERMISSION", hasPermission: hasPermission,auth0Domain: auth0Domain, now: now, token: jwtToken, permission: AUTH0_PERMISSION.list_all_short_url }, null, 3);
     }
   } else {
     console.log("no token");
-    response = {
-      body: JSON.stringify(
-        { error: "You must provide JWT in 'Authorization: Bearer' header" },
-        null,
-        3
-      ),
-      status: 403,
-      headers: { "content-type": "text/json" },
-    };
+    response.body = JSON.stringify(
+      { error: "You must provide JWT in 'Authorization: Bearer' header" },
+      null,
+      3
+    );
   }
   context.res = response;
 };

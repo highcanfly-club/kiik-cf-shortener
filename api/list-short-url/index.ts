@@ -1,10 +1,10 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { listAllLinks, Item } from "../common/cosmosdb";
+import { listAllLinks, Item } from "../common/cosmosdb.js";
 import {
   isAllowed,
   parseTokenFromAuthorizationHeader,
   AUTH0_PERMISSION,
-} from "../common/auth0/TokenHelper";
+} from "../common/auth0/TokenHelper.js";
 import { h } from "vue";
 
 const httpTrigger: AzureFunction = async function (
