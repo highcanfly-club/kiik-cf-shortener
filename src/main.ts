@@ -12,7 +12,15 @@ import { createWebHistory, createRouter, RouteRecordRaw } from "vue-router";
 import type { Auth0Instance, RedirectCallback } from "@/auth0";
 import { initAuth0 } from "@/auth0";
 import auth0conf from "@/config/auth0-conf.json";
-import "@/index.css";
+import { createI18n } from "vue-i18n"
+import { createPinia } from 'pinia'
+import "@/index.scss";
+
+import frFR from '@/locales/fr-FR.json'
+import enUS from '@/locales/en-US.json'
+
+type MessageSchema = typeof frFR
+type Messages = {"fr-FR"?:MessageSchema;"en-US"?:MessageSchema;"es-ES"?:MessageSchema;"pt-PT"?:MessageSchema}
 
 declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
@@ -26,33 +34,18 @@ const routes = [
     component: () => import("@/views/IndexPage.vue"),
     name: "index",
   },
-  {
-    path:"/login",
-    component: () => import("@/views/LinksPage.vue"),
-    name: "login"
-  },
-  {
-    path: "/add-shortlink",
-    component: () => import("@/auth0/AddShortLink.vue"),
-    name: "Add short link",
-  },
-  {
-    path: "/list-shortlinks",
-    component: () => import("@/auth0/ListShortLinks.vue"),
-    name: "list short links",
-  },
-  {
-    path: "/:pathMatch(.*)*",
-    name: "default",
-    redirect: (to) => {
-      console.log(to);
-      window.location.href = `${
-        window.location.origin
-      }/api/redirect?to=${to.path.substring(1)}`;
-      return {};
-    },
-  },
+
 ] as RouteRecordRaw[];
+
+const i18n = createI18n<[MessageSchema | string], 'fr-FR' | 'en-US'>({
+  locale: 'en-US',
+  legacy: false,
+  fallbackLocale: 'fr-FR',
+  messages: {
+      'fr-FR': frFR,
+      'en-US': enUS, //will be lazily loaded in HeaderMain/changeLang(locale)
+  }
+}) 
 
 const router = createRouter({
   scrollBehavior(to) {
@@ -66,18 +59,21 @@ const router = createRouter({
   routes,
 });
 
+const pinia = createPinia()
 const app = createApp(App);
-app.use(router).mount("#app");
+
+app.use(pinia).use(i18n).use(router)
+app.mount("#app");
 
 const REDIRECT_CALLBACK: RedirectCallback = () =>
   window.history.replaceState(
     {},
     document.title,
-    `${window.location.origin}/login`
+    `${window.location.origin}/`
   );
 
 app.config.globalProperties.$auth0 = initAuth0({
   onRedirectCallback: REDIRECT_CALLBACK,
-  redirectUri: `${window.location.origin}/login`,
+  redirectUri: `${window.location.origin}/`,
   ...auth0conf,
 } as never); // never because cacheLocation:"localstorage" is typed as string but as CacheLocation = "localstorage" | "memory" in Auth0SDK

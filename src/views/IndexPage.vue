@@ -1,57 +1,75 @@
 <!--
 =========================================================
-* © 2022 Ronan LE MEILLAT for %CLIENT_NAME%
+* © 2022 Ronan LE MEILLAT for INTERNAL DEVELOPMENT
 =========================================================
 This website use:
 - Vite, Vue3, FontAwesome 6, TailwindCss 3
 - And many others
 -->
 <template>
-  <div class="min-w-screen min-h-screen bg-blue-100 flex items-center overflow-hidden relative flex-col">
-    <div class="rounded-3xl bg-white text-slate-600 shadow-xl mt-10  p-1">
-      <img src="@/assets/img/Logo-KiiK-150.png" class="w-36 h-36">
+  <div class="m-12">
+    <div id="head" class="flex justify-between">
+      <div id="title">
+        <div class="">
+          <p class="text-3xl font-neutra-bold text-ambblue-800 tracking-widest">{{ $t('master_company') }} <span
+              class="text-kiikviolet">K</span><span class="text-kiikorange">i</span><span
+              class="text-kiikrose">i</span><span class="inline-block -scale-x-100 -ml-1 text-kiikvert">K</span></p>
+          <p class="text-3xl font-neutra-demiitalic uppercase text-ambblue-100">{{ $t('product_name') }}</p>
+        </div>
+      </div>
+      <div id="logo"><img class="w-32 h-32" src="@/assets/img/Logo-KiiK.svg" /></div>
     </div>
-    <div class="rounded-3xl bg-white shadow-xl mt-10 p-10 flex-col">
-      <h1 class="text-6xl text-watermelon-600 text-center">Vue3 template</h1>
-      <h3 class="text-xl text-watermelon-300 text-center">with</h3>
-      <h1 class="text-6xl text-blue-700 text-center">
-        Vite+Vue <i class="fab fa-vuejs"></i>
-      </h1>
-      <h1 class="text-6xl text-blue-700 text-center">
-        Tailwindcss 3 <i class="fab fa-css3"></i>
-      </h1>
-      <h3 class="text-xl text-watermelon-300 text-center">and</h3>
-      <h1 class="text-6xl text-blue-700 text-center">
-        Font Awesome 6 <i class="fas fa-font-awesome"></i>
-      </h1>
-      <h3 class="text-sm text-red-300 text-center">
-        don't forget to remove scripts and styles from index.html before
-        deployement
-      </h3>
+    <div id="subtitle" class="mt-4 flex">
+      <h3 class="text-lg font-neutra-bold uppercase tracking-widest text-ambgrey-900 mr-2"><i
+          class="fas fa-star-extra-sharp text-ambred-500 mr-1"></i>{{ $t('simple-link-shortener') }}</h3>
+      <h2 class="text-lg font-neutra-demiitalic uppercase tracking-widest text-ambgrey-100">
+        {{ $t('only-for-us') }}
+      </h2>
     </div>
-    <basic-card :msg="`Hello Vue ${version} in Vite!`" />
-    <flip-card />
+    <h-r-dotted />
+    <div id="3blocks" class="mt-4 flex justify-between">
+      <div id="3blocks1">
+        <p class="text-base font-neutra-demiitalic text-ambblue-800 tracking-widest">{{ $t('Repository') }}: <a
+            href="https://github.com">{{ $t('github') }}</a></p>
+        <p class="text-base font-neutra-demiitalic text-ambblue-100 tracking-widest">{{ $t('Follow') }}: <a
+            href="https://github.com/highcanfly-club/kiik-cf-shortener">{{ $t('repository') }}</a></p>
+        <p class="text-base font-neutra-book capitalize text-ambgrey-900">{{ $t('Hosting') }}: <a
+            href="https://azure.microsoft.com">{{ $t('azure-static-web-app') }}</a></p>
+        <p class="text-xs tracking-wide font-neutra-book text-ambgrey-900">{{ $t('total-cost') }}</p>
+      </div>
+      <div id="3blocks2">
+        <light-button @click="redirect('https://highcanfly.club')" text="High Can Fly" />
+      </div>
+      <div id="3blocks3">
+        <light-button @click="redirect('https://github.com/highcanfly-club/kiik-cf-shortener')" text="Github repo" />
+      </div>
+    </div>
+    <h-r-dotted />
+    <div id="shortenerlogik" class="mt-4">
+      <shortener-card />
+    </div>
+    <div id="footer" class="flex justify-end relative">
+      <div class="mt-4 border-r-6 border-b-6 border-ambblue-100 px-12 py-2  w-fit absolute right-32 z-2">
+        <div class="font-neutra-demi uppercase text-ambblue-100">{{ $t('contact') }}</div>
+        <div class="font-neutra-demiitalic  text-ambblue-800"><a :href="`mailto:${$t('email')}`">{{ $t('email') }}</a></div>
+      </div>
+      <div class="mt-4 border-l-6 border-b-6 border-ambblue-100 px-4 py-1 w-fit h-fit bg-white absolute right-0 z-3 ">
+        <div class="font-neutra-demi text-ambblue-100">{{ $t('c-ronan-le-meillat') }}</div>
+      </div>
+      <div class="mt-4 px-3 py-1 w-32 h-fit absolute right-0 top-10 z-10 ">
+        <div class="font-neutra-booksc text-justify leading-tight text-xxs tracking-wide text-ambgrey-200">{{ $t('disclaimer') }}</div>
+      </div>
+    </div>
   </div>
+
 </template>
   
-<script lang="ts">
-import BasicCard from "@/components/BasicCard.vue";
-import FlipCard from "@/components/FlipCard.vue";
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import LightButton from '@/components/ui/LightButton.vue';
+import ShortenerCard from '@/components/cards/ShortenerCard.vue';
+import HRDotted from '../components/ui/HRDotted.vue';
 
-export default defineComponent({
-  // type inference enabled
-  props: {
-  },
-  data() {
-    const version = this.$.appContext.app.version
-    return {
-      version
-    }
-  },
-  components: {
-    BasicCard,
-    FlipCard
-  }
-})
+function redirect(to: string) {
+  window.location.href = to
+}
 </script>

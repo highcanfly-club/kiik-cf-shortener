@@ -5,9 +5,9 @@
       "type": "httpTrigger",
       "direction": "in",
       "name": "req",
+      "route": "{link:regex(^![abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-]{{5}}$)}",
       "methods": [
-        "get",
-        "post"
+        "get"
       ]
     },
     {
@@ -16,5 +16,5 @@
       "name": "res"
     }
   ],
-  "scriptFile": "../dist/hello-world/index.js"
+  "scriptFile": "../dist/redirect/index.js"
 }
