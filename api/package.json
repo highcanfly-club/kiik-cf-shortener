@@ -2,16 +2,23 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": ">=16.14.2"
+  },
+  "type": "module",
   "scripts": {
-    "build": "tsc",
+    "prepare-env": "node --loader ts-node/esm ./prepare-env.ts",
+    "build": "npm run prepare-env && tsc",
     "watch": "tsc -w",
     "prestart": "npm run build",
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
+    "@auth0/auth0-spa-js": "^1.22.4",
     "@azure/cosmos": "^3.17.1",
-    "@auth0/auth0-spa-js": "^1.22.4"
+    "jose": "^4.10.0",
+    "nanoid": "^4.0.0"
   },
   "devDependencies": {
     "@azure/functions": "^3.2.0",

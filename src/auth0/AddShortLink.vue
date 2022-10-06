@@ -28,8 +28,8 @@ This website use:
         <label for="description" class="mt-1 block text-slate-800">
           {{ $t('description') }}
         </label>
-        <input type="text" name="description" v-model="description" id="description" :placeholder="$t('enter-description')"
-          class="
+        <input type="text" name="description" v-model="description" id="description"
+          :placeholder="$t('enter-description')" class="
             w-full
             bg-slate-200
             rounded
@@ -61,9 +61,9 @@ This website use:
           <option value="31556952">1 {{$t('year',1)}}</option>
           <option value="2145872736">68 {{$t('year',2)}}</option>
         </select>
-        <div v-if="!formVerified" class="mt-4" >
-          <light-button :text="$t('add')" type="submit"/>
-          <h-r-dotted/>
+        <div v-if="!formVerified" class="mt-4">
+          <light-button :text="$t('add')" type="submit" />
+          <h-r-dotted />
         </div>
       </template>
       <template v-else>
@@ -123,7 +123,7 @@ const isValidHttpUrl = function (string: string): boolean {
   return url.protocol === "http:" || url.protocol === "https:";
 }
 
-const checkForm = function (e:Event): boolean {
+const checkForm = function (e: Event): boolean {
   if (
     longurl.value.length &&
     isValidHttpUrl(longurl.value) &&
@@ -152,6 +152,7 @@ const submitForm = function (): void {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token.value}`,
+        "Auth0-Authorization": `Bearer ${token.value}`, // duplicate because azure replace authorization header with its own
       },
       body: JSON.stringify({
         url: longurl.value,

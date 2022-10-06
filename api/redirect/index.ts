@@ -1,5 +1,5 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
-import { getLongUrl } from "../common/cosmosdb";
+import { getLongUrl } from "../common/cosmosdb.js";
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     const auth0Domain: string = process.env.AUTH0_DOMAIN;

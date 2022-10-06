@@ -61,7 +61,8 @@ onMounted(
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token.access_token}`,
+                "Authorization": `Bearer ${token.access_token}`,
+                "Auth0-Authorization": `Bearer ${token.access_token}`, // duplicate because azure replace authorization header with its own
               },
               body: JSON.stringify({}),
             })
