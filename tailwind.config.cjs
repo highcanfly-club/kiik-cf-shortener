@@ -19,6 +19,10 @@ module.exports = {
         sun: "'☀️'",
       },
       colors: {
+        kiikviolet:"#41195E",
+        kiikorange:"#CB3F1F",
+        kiikrose:"#C1091E",
+        kiikvert:"#237331",
         hcfdark: "#0e6835",
         hcflight: "#95be1f",
         hcfcardinal: "#882647",
