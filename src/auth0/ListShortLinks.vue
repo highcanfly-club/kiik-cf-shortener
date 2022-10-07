@@ -1,7 +1,7 @@
 <template>
-  <div class="overflow-scroll">
+  <div class="overflow-scroll font-neutra-booknoambiguity">
     <table class="table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <thead class="text-xs font-neutra-bold text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" class="py-3 px-6">{{ $t('short_link') }}</th>
           <th scope="col" class="py-3 px-6">{{ $t('target') }}</th>
@@ -11,12 +11,12 @@
       </thead>
       <tbody>
         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" v-for="data in kvData" :key="data.name">
-          <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"><a
+          <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap text-base dark:text-white tracking-widest"><a
               :href="`${canonical}!${data.name}`">!{{ data.name }}</a></td>
           <td class="py-4 px-6">{{ data.value }}</td>
           <td class="py-4 px-6">{{ data.description }}</td>
           <td class="py-4 px-6">{{`${(new
-          Date(data.expiration)).toLocaleDateString('fr-FR')}`
+          Date(data.expiration)).toLocaleDateString(locale as string)}`
           }}</td>
         </tr>
       </tbody>
@@ -28,6 +28,8 @@ import { onMounted, ref } from "vue";
 import { isAllowed, AUTH0_PERMISSION } from "./TokenHelper";
 import jwks from "@/config/jwks.json";
 import { getAuth0 } from '@/auth0';
+import { useI18n } from "vue-i18n";
+const {locale} = useI18n({})
 
 interface kvStoreElement {
   name: string;
