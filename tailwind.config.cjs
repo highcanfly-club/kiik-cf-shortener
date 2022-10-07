@@ -147,6 +147,7 @@ module.exports = {
         "neutra-boldsc": ["NeutrafaceText-BoldSC"],
         "neutra-boldalt": ["NeutrafaceText-BoldAlt"],
         "neutra-book": ["NeutrafaceText-Book"],
+        "neutra-booknoambiguity": ["NeutrafaceText-BookNoAmbiguity"],
         "neutra-booksc": ["NeutrafaceText-BookSC"],
         "neutra-bookitalic": ["NeutrafaceText-BookItalic"],
         "neutra-demi": ["NeutrafaceText-Demi"],
