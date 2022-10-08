@@ -7,25 +7,25 @@ This website use:
 - And many others
 */
 
-import Fontmin from 'fontmin'
+import Fontminify from '@sctg/fontminify'
 import stream from 'stream'
 import gulp from 'gulp'
 import replace from 'gulp-replace'
 
 const SRC_PATH = 'typo'
 const DST_PATH = 'src/assets/typo'
-type FontminFile = {
+type FontminifyFile = {
     _contents: stream.Readable;
 }
 
-function convertTTF2OTF(srcPath: string, dstPath: string): Promise<FontminFile[]> {
-    return new Promise<FontminFile[]>((resolve, reject) => {
-        const fontmin = new Fontmin()
+function convertTTF2OTF(srcPath: string, dstPath: string): Promise<FontminifyFile[]> {
+    return new Promise<FontminifyFile[]>((resolve, reject) => {
+        const fontmin = new Fontminify()
             .src(srcPath + '/*.otf')
             .dest(dstPath + '/')
-            .use(Fontmin.otf2ttf());
+            .use(Fontminify.otf2ttf());
 
-        fontmin.run((err: Error, files: FontminFile[], stream) => {
+        fontmin.run((err: Error, files: FontminifyFile[], stream) => {
             if (err) {
                 reject(err);
             } else {
@@ -35,20 +35,20 @@ function convertTTF2OTF(srcPath: string, dstPath: string): Promise<FontminFile[]
     })
 }
 
-function convertTTF2WEB(srcPath: string, dstPath: string): Promise<FontminFile[]> {
-    return new Promise<FontminFile[]>((resolve, reject) => {
-        const fontmin = new Fontmin()
+function convertTTF2WEB(srcPath: string, dstPath: string): Promise<FontminifyFile[]> {
+    return new Promise<FontminifyFile[]>((resolve, reject) => {
+        const fontmin = new Fontminify()
             .src(srcPath + '/*.ttf')
             .dest(dstPath + '/')
-            .use(Fontmin.ttf2woff())
-            .use(Fontmin.ttf2woff2())
-            .use(Fontmin.ttf2eot())
-            .use(Fontmin.ttf2svg())
-            .use(Fontmin.css({
+            .use(Fontminify.ttf2woff())
+            .use(Fontminify.ttf2woff2())
+            // .use(Fontmin.ttf2eot())
+            // .use(Fontmin.ttf2svg())
+            .use(Fontminify.css({
                 fontPath: srcPath + '/',
             }));
 
-        fontmin.run((err: Error, files: FontminFile[], stream) => {
+        fontmin.run((err: Error, files: FontminifyFile[], stream) => {
             if (err) {
                 reject(err);
             } else {

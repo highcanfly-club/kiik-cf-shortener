@@ -13,7 +13,7 @@ This website use:
                 aria-haspopup="true">
                 <span class="hidden sm:inline-flex">{{ $t("nav_lang") }}&nbsp;</span>
                 <img class="inline-flex cursor-pointer w-4 h-4 self-center"
-                    :src="$require(`assets/lang/${$i18n.locale.substring(0, 2)}.svg`)" />
+                    :src="$require(`assets/lang/${$i18n.locale.substring(3).toLowerCase()}.svg`)" />
             </button>
         </div>
         <div v-if="langOpen" class="
@@ -28,7 +28,7 @@ This website use:
             <div class="py-1" role="none">
                 <span v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">
                     <img @click="changeLang(locale)" class="cursor-pointerw-6 h-6"
-                        :src="$require(`assets/lang/${locale.substring(0, 2)}.svg`)" />
+                        :src="$require(`assets/lang/${locale.substring(3).toLowerCase()}.svg`)" />
                 </span>
             </div>
         </div>

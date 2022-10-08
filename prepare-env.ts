@@ -66,3 +66,10 @@ const auth0Conf = {
       }
     );
   })();
+
+  //Install necessary flags
+import {availableLanguages} from './src/config/locales.js'
+availableLanguages.forEach((lang)=>{
+  const baseFile = lang.substring(3).toLowerCase()
+  fs.copyFileSync(`./flags/${baseFile}.svg`,`./src/assets/lang/${baseFile}.svg`)
+})
