@@ -38,6 +38,7 @@
     "@types/glob": "^8.0.0",
     "@vitejs/plugin-vue": "^3.1.2",
     "autoprefixer": "^10.4.12",
+    "glob-parent":"^6.0.2",
     "gulp": "^4.0.2",
     "gulp-append-prepend": "^1.0.9",
     "gulp-replace": "^1.1.3",
