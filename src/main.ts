@@ -36,7 +36,11 @@ const routes = [
   },
 ] as RouteRecordRaw[];
 
-const i18n = createI18n<[MessageSchema | string], "fr-FR" | "en-US" | "es-ES">({
+import { availableLanguages } from "@/config/locales.js";
+const i18n = createI18n<
+  [MessageSchema | string],
+  typeof availableLanguages[number]
+>({
   locale: "en-US",
   legacy: false,
   fallbackLocale: "fr-FR",

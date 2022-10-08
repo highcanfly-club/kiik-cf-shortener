@@ -3,7 +3,7 @@ import * as fsc from "fs";
 import path from "path";
 import { Transform } from "stream";
 import glob from "glob";
-import Fontmin from "fontmin";
+import Fontminify from "@sctg/fontminify";
 import { Plugin, UserConfig, ResolvedConfig } from "vite";
 import colors from "picocolors";
 
@@ -162,9 +162,9 @@ export default function vitePluginNeutrafaceMinify(
             const glyphsAndWhiteList = [
               ...new Set(glyphs.concat(glyphWhitelist).join("")),
             ].join(",");
-            const fontmin = new Fontmin()
+            const fontmin = new Fontminify()
               .use(
-                Fontmin.glyph({
+                Fontminify.glyph({
                   text: glyphsAndWhiteList,
                   hinting: true,
                 })
@@ -173,11 +173,11 @@ export default function vitePluginNeutrafaceMinify(
               .dest(`${BASE_DIR}/`)
               //.use(Fontmin.ttf2eot())
               .use(
-                Fontmin.ttf2woff({
+                Fontminify.ttf2woff({
                   deflate: true,
                 } as any)
               )
-              .use(Fontmin.ttf2woff2());
+              .use(Fontminify.ttf2woff2());
             //.use(Fontmin.ttf2svg())
             fontmin.use(
               new Transform({
