@@ -13,8 +13,9 @@
     "convert-typo": "node --loader ts-node/esm ./typo/generate-webfonts.ts",
     "build": "npm run convert-typo && npm run prepare-env && vite build && gulp licenses",
     "preview": "vite preview",
-    "start": "npx @azure/static-web-apps-cli start https://localhost:5173 --swa-config-location ./ -s -e localhost.lesmuids.windows-ext.pem -k localhost.lesmuids.windows-ext.key -p 8788 --api-location ./api -t 120 --run 'npm run dev'",
-    "prestart": "cd api && npm run watch &"
+    "start": "npx @azure/static-web-apps-cli start https://localhost:5173 --swa-config-location ./ -s -e localhost.pem -k localhost.key -p 8788 --api-location ./api -t 120 --run 'npm run dev'",
+    "prestart": "cd api && npm run watch &",
+    "create-cert": "openssl req -x509 -newkey rsa:4096 -keyout localhost.key -out localhost.pem -sha256 -nodes -days 365"
   },
   "dependencies": {
     "@auth0/auth0-spa-js": "^1.22.4",
@@ -38,6 +39,7 @@
     "@types/glob": "^8.0.0",
     "@vitejs/plugin-vue": "^3.1.2",
     "autoprefixer": "^10.4.12",
+    "glob-parent":"^6.0.2",
     "gulp": "^4.0.2",
     "gulp-append-prepend": "^1.0.9",
     "gulp-replace": "^1.1.3",
