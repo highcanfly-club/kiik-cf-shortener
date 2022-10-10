@@ -64,7 +64,7 @@ This website use:
         </select>
         <div v-if="!formVerified" class="mt-4">
           <light-button :text="$t('add')" type="submit" />
-          <h-r-dotted />
+          <hr-dotted />
         </div>
       </template>
       <template v-else>
@@ -82,7 +82,7 @@ import { isAllowed, AUTH0_PERMISSION } from "./TokenHelper";
 import jwks from "@/config/jwks.json";
 import { Auth0Instance } from "./instance";
 import LightButton from "@/components/ui/LightButton.vue";
-import HRDotted from "@/components/ui/HRDotted.vue";
+import HrDotted from "@/components/ui/HRDotted.vue";
 
 const $auth0 = getCurrentInstance().appContext.app.config.globalProperties.$auth0 as Auth0Instance
 const token = ref("");

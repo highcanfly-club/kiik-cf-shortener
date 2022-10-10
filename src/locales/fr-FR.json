@@ -35,5 +35,6 @@
   "validity": "validité",
   "second": "seconde|secondes",
   "mask_token": "cacher le jeton",
-  "nav_lang": "langue"
+  "nav_lang": "langue",
+  "enter_link": "Entrez le lien (!xxxxx)"
 }

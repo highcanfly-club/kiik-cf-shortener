@@ -17,5 +17,8 @@
         {{ $t('only_for_us') }}
       </h2>
     </div>
-    <h-r-dotted />
+    <hr-dotted />
 </template>
+<script setup lang="ts">
+import HrDotted from "@/components/ui/HRDotted.vue";
+</script>

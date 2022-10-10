@@ -35,5 +35,6 @@
   "permissions": "permissions",
   "second": "second|seconds",
   "mask_token": "hide token",
-  "nav_lang": "language"
+  "nav_lang": "language",
+  "enter_link": "Enter the link (!xxxxx)"
 }
