@@ -25,7 +25,7 @@ This website use:
       <div id="3blocks3" class="mt-2 lg:mt-0">
         <div class="flex">
           <input type="text" ref="short" class="mr-1 border-ambblue-800 text-sm font-neutra-booksc w-52 rounded-lg border-2 border-dotted" :placeholder="$t('enter_link')"/>
-          <light-button @click="redirect(($refs.short as HTMLInputElement).value)" text="go" />
+          <light-button @click="redirectApi(($refs.short as HTMLInputElement).value)" text="go" />
         </div>
       </div>
     </div>
@@ -38,7 +38,6 @@ This website use:
       <chang-lang />
     </div>
   </div>
-
 </template>
   
 <script setup lang="ts">
@@ -51,5 +50,10 @@ import BlockHeader from '../components/headers/BlockHeader.vue';
 
 function redirect(to: string) {
   window.location.href = to
+}
+
+function redirectApi(to: string) {
+  const _to = to.startsWith('!') ? to.substring(1) : to
+  window.location.href = window.location.origin +'/api/redirect?to=' + _to
 }
 </script>
