@@ -35,5 +35,6 @@
   "total_cost": "Coste total 0€",
   "validity": "validez",
   "week": "semana|semanas",
-  "year": "año|años"
+  "year": "año|años",
+  "enter_link": "Introduce el enlace (!xxxxx)"
 }
