@@ -24,7 +24,8 @@ This website use:
       </div>
       <div id="3blocks3" class="mt-2 lg:mt-0">
         <div class="flex">
-          <input type="text" ref="short" class="mr-1 border-ambblue-800 text-sm font-neutra-booksc w-52 rounded-lg border-2 border-dotted" :placeholder="$t('enter_link')"/>
+          <input type="text" ref="short" 
+          class="mr-1 border-ambblue-800 text-sm font-neutra-booknoambiguity w-52 rounded-lg border-2 border-dotted" :placeholder="$t('enter_link')"/>
           <light-button @click="redirectApi(($refs.short as HTMLInputElement).value)" text="go" />
         </div>
       </div>
