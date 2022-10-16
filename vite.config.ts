@@ -9,7 +9,7 @@ This website use:
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
-import vitePluginFontawesomeminify from './fontawesome'
+import vitePluginFontawesomeminify from '@highcanfly-club/fontawesome'
 import vitePluginNeutrafaceMinify from "./typo/NeutrafaceMinifyPlugin.js"
 import fs from 'fs'
 
