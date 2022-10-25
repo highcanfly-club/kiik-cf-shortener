@@ -67,6 +67,18 @@ const auth0Conf = {
     );
   })();
 
+  (async () => {
+    const jwks = await getJwks();
+    fs.writeFile(
+      "./api/common/config/jwks.json",
+      JSON.stringify(jwks),
+      "utf8",
+      function (err) {
+        if (err) return console.log(err);
+      }
+    );
+  })();
+
   //Install necessary flags
 import {availableLanguages} from './src/config/locales.js'
 availableLanguages.forEach((lang)=>{
