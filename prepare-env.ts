@@ -4,10 +4,8 @@ import https from "https"
 const auth0Conf = {
     "domain": process.env.AUTH0_DOMAIN,
     "clientId": process.env.AUTH0_CLIENT_ID,
-    "scope": 'openid email profile user_metadata app_metadata picture',
     "useRefreshTokens": true,
     "cacheLocation": "localstorage",
-    "audience": "https://kiik.api",
     "authorizationParams": {
       "scope": 'openid email profile user_metadata app_metadata picture',
       "audience": "https://kiik.api"
