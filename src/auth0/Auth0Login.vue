@@ -97,7 +97,9 @@ if (
     // Log the user out
     function logout():void {
        $auth0.logout({
-        localOnly: true,
+        logoutParams:{
+          returnTo: window.location.origin
+        }
       });
     }
 
