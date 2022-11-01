@@ -124,6 +124,7 @@ export function initAuth0<AppStateType> ({
     authOptions.authorizationParams.redirect_uri = redirectUri
     state.auth0Client = await createAuth0Client(authOptions)
 
+    console.log(authOptions)
     try {
       // If the user is returning to the app after authentication..
       if (
