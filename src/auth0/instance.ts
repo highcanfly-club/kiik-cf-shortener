@@ -1,15 +1,7 @@
-/*!
-=========================================================
-* © 2022 Ronan LE MEILLAT for INTERNAL DEVELOPMENT
-=========================================================
-This website use:
-- Vuejs v3
-- Font Awesome
-- And many others
-*/
 // adapted from https://github.com/dreamonkey/vue-auth0/tree/main/src
 
-import createAuth0Client, {
+import {
+  createAuth0Client,
   Auth0Client as Auth0ClientClass,
   Auth0ClientOptions,
   GetTokenSilentlyOptions,
@@ -128,11 +120,9 @@ export function initAuth0<AppStateType> ({
   /** Instantiate the SDK client */
   void (async () => {
     // Create a new instance of the SDK client using members of the given options object
-    state.auth0Client = await createAuth0Client({
-      ...options,
-      client_id: options.client_id,
-      redirect_uri: redirectUri
-    })
+    const authOptions: Auth0ClientOptions = {...options,clientId: options.clientId}
+    authOptions.authorizationParams.redirect_uri = redirectUri
+    state.auth0Client = await createAuth0Client(authOptions)
 
     try {
       // If the user is returning to the app after authentication..
@@ -207,8 +197,8 @@ export function initAuth0<AppStateType> ({
   }
 
   /** Returns all the claims present in the ID token */
-  const getIdTokenClaims: Auth0Client['getIdTokenClaims'] = (options) => {
-    return state.auth0Client.getIdTokenClaims(options)
+  const getIdTokenClaims: Auth0Client['getIdTokenClaims'] = () => {
+    return state.auth0Client.getIdTokenClaims()
   }
 
   /** Returns the access token. If the token is invalid or missing, a new one is retrieved */

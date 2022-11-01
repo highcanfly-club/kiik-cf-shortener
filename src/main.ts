@@ -79,6 +79,8 @@ const REDIRECT_CALLBACK: RedirectCallback = () =>
 app.config.globalProperties.$require = useImage;
 app.config.globalProperties.$auth0 = initAuth0({
   onRedirectCallback: REDIRECT_CALLBACK,
-  redirectUri: `${window.location.origin}/`,
+  authorizationParams: {
+    redirect_uri: `${window.location.origin}/login`
+  },
   ...auth0conf,
-} as never); // never because cacheLocation:"localstorage" is typed as string but as CacheLocation = "localstorage" | "memory" in Auth0SDK
+} as never); // never because cacheLocation:"localstorage" is type as string but as CacheLocation = "localstorage" | "memory" in Auth0SDK
