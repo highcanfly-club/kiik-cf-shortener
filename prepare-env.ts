@@ -3,11 +3,15 @@ import fs from "fs"
 import https from "https"
 const auth0Conf = {
     "domain": process.env.AUTH0_DOMAIN,
-    "client_id": process.env.AUTH0_CLIENT_ID,
+    "clientId": process.env.AUTH0_CLIENT_ID,
     "scope": 'openid email profile user_metadata app_metadata picture',
     "useRefreshTokens": true,
     "cacheLocation": "localstorage",
-    "audience": "https://kiik.api"
+    "audience": "https://kiik.api",
+    "authorizationParams": {
+      "scope": 'openid email profile user_metadata app_metadata picture',
+      "audience": "https://kiik.api"
+    }
   };
   fs.writeFile('./src/config/auth0-conf.json',
     JSON.stringify(auth0Conf),
