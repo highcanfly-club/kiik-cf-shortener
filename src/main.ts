@@ -65,11 +65,11 @@ const router = createRouter({
 
 const pinia = createPinia();
 const app = createApp(App);
-
+const baseUrl = import.meta.url
 const useImage = (url: string) => {
-  return new URL(`/src/${url}`, import.meta.url).href;
+  return new URL(`/src/${url}`, baseUrl).href;
 };
-
+console.log(import.meta.url)
 app.use(pinia).use(i18n).use(router);
 app.mount("#app");
 
