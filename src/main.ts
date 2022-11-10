@@ -24,7 +24,6 @@ type Messages = { "fr-FR"?: MessageSchema; "en-US"?: MessageSchema };
 declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
     $auth0: Auth0Instance;
-    $require: typeof useImage;
   }
 }
 
@@ -65,10 +64,7 @@ const router = createRouter({
 
 const pinia = createPinia();
 const app = createApp(App);
-const baseUrl = import.meta.url
-const useImage = (url: string) => {
-  return new URL(`/src/${url}`, baseUrl).href;
-};
+
 console.log(import.meta.url)
 app.use(pinia).use(i18n).use(router);
 app.mount("#app");
@@ -76,7 +72,6 @@ app.mount("#app");
 const REDIRECT_CALLBACK: RedirectCallback = () =>
   window.history.replaceState({}, document.title, `${window.location.origin}/`);
 
-app.config.globalProperties.$require = useImage;
 app.config.globalProperties.$auth0 = initAuth0({
   onRedirectCallback: REDIRECT_CALLBACK,
   logoutParams: {
