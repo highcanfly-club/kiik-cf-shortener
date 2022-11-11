@@ -9,8 +9,22 @@
             <div class="font-neutra-demi text-ambblue-100">{{ $t('c_ronan_le_meillat') }}</div>
         </div>
         <div class="mt-4 px-3 py-1 w-32 h-fit absolute right-0 top-10 z-10 ">
-            <div class="font-neutra-booksc text-justify leading-tight text-xxs tracking-wide text-ambgrey-200">{{
-            $t('disclaimer') }}</div>
+            <div id="disclaimer" class="font-neutra-booksc leading-tight text-xxs tracking-wide text-ambgrey-200"
+                @mouseover="disclaimerVisible = false" @mouseleave="disclaimerVisible = true">
+                <div v-if="disclaimerVisible" class="text-justify">{{
+                        $t('disclaimer')
+                }}</div>
+                <div v-else>
+                    Vite:{{ versions.viteVersion }} Vue:{{ versions.vueVersion }} CosmosDB:{{ versions.cosmosDBSdkVersion }}
+                    Auth0:{{ versions.auth0SdkVersion }}
+                </div>
+            </div>
         </div>
     </div>
 </template>
+<script setup lang="ts">
+import versions from "@/config/versions.json"
+import { ref } from "vue";
+
+const disclaimerVisible = ref<boolean>(true)
+</script>
