@@ -47,8 +47,8 @@ const auth0Conf = {
           });
           res.on("end", () => {
             const structuredData = JSON.parse(data) as Auth0JWKS;
-            structuredData.domain = process.env.AUTH0_DOMAIN;
-            structuredData.namespace = process.env.AUTH0_CUSTOM_NAMESPACE;
+            structuredData.domain = process.env.AUTH0_DOMAIN || '';
+            structuredData.namespace = process.env.AUTH0_CUSTOM_NAMESPACE || '';
             resolve(structuredData);
           });
         })
