@@ -1,13 +1,19 @@
 /*generate auth0-conf.json*/
 import fs from "fs";
 import https from "https";
+import packageJsonLock from './package-lock.json' assert {type:'json'}
+
+/*generate auth0-conf.json*/
 const auth0Conf = {
-  domain: process.env.AUTH0_DOMAIN,
-  client_id: process.env.AUTH0_CLIENT_ID,
-  scope: "openid email profile user_metadata app_metadata picture",
-  useRefreshTokens: true,
-  cacheLocation: "localstorage",
-  audience: "https://kiik.api",
+  "auth0SdkVersion": packageJsonLock.dependencies["@auth0/auth0-spa-js"].version,
+  "domain": process.env.AUTH0_DOMAIN,
+  "clientId": process.env.AUTH0_CLIENT_ID,
+  "useRefreshTokens": true,
+  "cacheLocation": "localstorage",
+  "authorizationParams": {
+    "scope": "openid email profile user_metadata app_metadata picture",
+    "audience": "https://kiik.api"
+  }
 };
 fs.writeFile(
   "./common/config/auth0-conf.json",
