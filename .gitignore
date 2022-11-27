@@ -41,3 +41,4 @@ l*.key
 src/assets/typo
 jwks.json
 src/config/versions.json
+src/config/codeStats.json
