@@ -16,7 +16,7 @@
                 }}</div>
                 <div v-else>
                     Vite:{{ versions.viteVersion }} Vue:{{ versions.vueVersion }} CosmosDB:{{ versions.cosmosDBSdkVersion }}
-                    Auth0:{{ versions.auth0SdkVersion }}
+                    Auth0:{{ versions.auth0SdkVersion }}  Metric:{{codeStats.Typescript.codeLines+codeStats.Vue.codeLines+codeStats.Stylesheets.codeLines}}
                 </div>
             </div>
         </div>
@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import versions from "@/config/versions.json"
 import { ref } from "vue";
+import codeStats from "@/config/codeStats.json"
 
 const disclaimerVisible = ref<boolean>(true)
 </script>

@@ -2,6 +2,17 @@
 import fs from "fs"
 import https from "https"
 import packageJsonLock from "./package-lock.json" assert {type:"json"}
+import {LineCount} from "@sctg/code-stats"
+
+const results = await LineCount.countLines(['src','api/add-short-url','api/autoroute','api/common','api/list-short-url','api/redirect'])
+fs.writeFile(
+  "./src/config/codeStats.json",
+  JSON.stringify(results),
+  "utf8",
+  function (err) {
+    if (err) return console.log(err);
+  }
+);
 
 const auth0Conf = {
     "domain": process.env.AUTH0_DOMAIN,
