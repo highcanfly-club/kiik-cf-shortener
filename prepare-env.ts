@@ -4,7 +4,7 @@ import https from "https"
 import packageJsonLock from "./package-lock.json" assert {type:"json"}
 import {LineCount} from "@sctg/code-stats"
 
-const results = await LineCount.countLines('src')
+const results = await LineCount.countLines(['src','api/add-short-url','api/autoroute','api/common','api/list-short-url','api/redirect'])
 fs.writeFile(
   "./src/config/codeStats.json",
   JSON.stringify(results),

@@ -34,7 +34,7 @@
     "@babel/types": "^7.20.2",
     "@fullhuman/postcss-purgecss": "^5.0.0",
     "@highcanfly-club/fontawesome": "^1.0.0",
-    "@sctg/code-stats": "^0.1.2",
+    "@sctg/code-stats": "^0.1.4",
     "@sctg/fontminify": "^1.0.4",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/typography": "^0.5.8",
