@@ -18,27 +18,27 @@
     "create-cert": "openssl req -x509 -newkey rsa:4096 -keyout localhost.key -out localhost.pem -sha256 -nodes -days 365"
   },
   "dependencies": {
-    "@auth0/auth0-spa-js": "^2.0.1",
+    "@auth0/auth0-spa-js": "^2.0.2",
     "@azure/cosmos": "^3.17.2",
     "@azure/functions": "^3.5.0",
     "@pqina/flip": "^1.7.7",
-    "@vueuse/core": "^9.9.0",
+    "@vueuse/core": "^9.11.1",
     "jose": "^4.11.2",
-    "pinia": "^2.0.28",
+    "pinia": "^2.0.29",
     "vue": "3.2.45",
     "vue-i18n": "^9.2.2",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@azure/static-web-apps-cli": "1.0.2",
+    "@azure/static-web-apps-cli": "1.0.6",
     "@babel/types": "^7.20.7",
     "@fullhuman/postcss-purgecss": "^5.0.0",
     "@highcanfly-club/fontawesome": "^1.0.0",
     "@sctg/code-stats": "^0.1.4",
     "@sctg/fontminify": "^1.0.4",
     "@tailwindcss/forms": "^0.5.3",
-    "@tailwindcss/typography": "^0.5.8",
-    "@types/glob": "^8.0.0",
+    "@tailwindcss/typography": "^0.5.9",
+    "@types/glob": "^8.0.1",
     "@types/gulp": "^4.0.10",
     "@vitejs/plugin-vue": "^4.0.0",
     "autoprefixer": "^10.4.13",
@@ -46,13 +46,13 @@
     "gulp": "^4.0.2",
     "gulp-append-prepend": "^1.0.9",
     "gulp-replace": "^1.1.4",
-    "npm-check-updates": "^16.6.2",
-    "postcss": "^8.4.20",
+    "npm-check-updates": "^16.6.3",
+    "postcss": "^8.4.21",
     "postcss-purgefonts": "^1.0.2",
     "sass": "^1.57.1",
     "tailwindcss": "^3.2.4",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.4",
-    "vite": "^4.0.3"
+    "vite": "^4.0.4"
   }
 }
