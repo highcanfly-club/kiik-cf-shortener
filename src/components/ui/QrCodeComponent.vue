@@ -11,7 +11,7 @@ const qrcodeData = ref<string>("");
 const props = withDefaults(defineProps<{ 
         text: string; 
          }>(), { 
-            text: 'https://kiik.cf/', 
+            text: 'https://a.kiik.pp.ua/', 
              })
 
 function getQrCode(link: string) {
