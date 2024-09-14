@@ -23,12 +23,12 @@
     "@azure/functions": "^4.5.1",
     "@pqina/flip": "^1.8.3",
     "@vueuse/core": "^11.0.3",
-    "jose": "^5.8.0",
+    "jose": "^5.9.2",
     "pinia": "^2.2.2",
     "qrcode": "^1.5.4",
-    "vue": "3.5.3",
-    "vue-i18n": "^10.0.0",
-    "vue-router": "^4.4.3"
+    "vue": "3.5.5",
+    "vue-i18n": "^10.0.1",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@azure/static-web-apps-cli": "2.0.1",
@@ -52,9 +52,9 @@
     "postcss": "^8.4.45",
     "postcss-purgefonts": "^1.0.2",
     "sass": "^1.78.0",
-    "tailwindcss": "^3.4.10",
+    "tailwindcss": "^3.4.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2",
-    "vite": "^5.4.3"
+    "vite": "^5.4.5"
   }
 }
