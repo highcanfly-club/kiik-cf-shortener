@@ -11,9 +11,9 @@ This website use:
         <div>
             <button @click="langOpen = !langOpen" type="button" class=" " id="menu-button" aria-expanded="true"
                 aria-haspopup="true">
-                <span class="hidden sm:inline-flex">{{ $t("nav_lang") }}&nbsp;</span>
+                <span class="hidden sm:inline-flex">{{ t("nav_lang") }}&nbsp;</span>
                 <img class="inline-flex cursor-pointer w-4 h-4 self-center"
-                    :src="$require(`@/assets/lang/${$i18n.locale.substring(3).toLowerCase()}.svg`)" />
+                    :src="getFlagSrc(locale)" />
             </button>
         </div>
         <div v-if="langOpen" class="
@@ -26,9 +26,9 @@ This website use:
                         block
                       " role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
             <div class="py-1" role="none">
-                <span v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">
-                    <img @click="changeLang(locale)" class="cursor-pointerw-6 h-6"
-                        :src="$require(`@/assets/lang/${locale.substring(3).toLowerCase()}.svg`)" />
+                <span v-for="locale in availableLocales" :key="`locale-${locale}`" :value="locale">
+                    <img @click="changeLang(locale)" class="cursor-pointer w-6 h-6"
+                        :src="getFlagSrc(locale)" />
                 </span>
             </div>
         </div>
@@ -39,12 +39,21 @@ import { onBeforeMount, ref } from 'vue'
 import { useLocaleStore } from '@/utilities/LocaleHelper.js'
 import { useRoute,useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { $require } from '@/utilities/viteHelper.js'
 const langOpen = ref(false)
 const localeCounter = useLocaleStore()
-const {locale,availableLocales,messages,fallbackLocale} = useI18n({})
+const {locale,availableLocales,messages,fallbackLocale, t} = useI18n({})
 const route = useRoute()
 const router = useRouter()
+
+const flagIcons = import.meta.glob('../assets/lang/*.svg', {
+    eager: true,
+    import: 'default'
+}) as Record<string, string>
+
+const getFlagSrc = (localeCode: string): string => {
+    const countryCode = localeCode.substring(3).toLowerCase()
+    return flagIcons[`../assets/lang/${countryCode}.svg`] ?? ''
+}
 
 const changeLang = (wantedLocale: string) => {
     console.log(`Locale change #${localeCounter.count}`)
