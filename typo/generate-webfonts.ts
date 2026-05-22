@@ -60,7 +60,7 @@ function convertTTF2WEB(srcPath: string, dstPath: string): Promise<FontminifyFil
 
 function correctCssPath(srcPath: string) {
     gulp.src(srcPath + '/*.css')
-        .pipe(replace(/\"src\/assets/g, '"@/assets'))
+        .pipe(replace(/\"src\/assets/g, '"./assets'))
         .pipe(gulp.dest(srcPath + '/'));
 }
 
