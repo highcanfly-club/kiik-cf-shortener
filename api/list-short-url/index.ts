@@ -1,19 +1,18 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import { listAllLinks, Item } from "../common/cosmosdb.js";
+import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
+import { listAllLinks } from "../common/cosmosdb.js";
 import {
   isAllowed,
   parseTokenFromAuthorizationHeader,
   AUTH0_PERMISSION,
 } from "../common/auth0/TokenHelper.js";
-import { h } from "vue";
 
-const httpTrigger: AzureFunction = async function (
-  context: Context,
-  request: HttpRequest
-): Promise<void> {
+export async function listShortUrl(
+  request: HttpRequest,
+  context: InvocationContext
+): Promise<HttpResponseInit> {
   const auth0Domain: string = process.env.AUTH0_DOMAIN;
-  let response = { body: null as string };
-  const authorizationHeader = request.headers["auth0-authorization"]; //authorization is those from Azure
+  let response: HttpResponseInit = { body: null as string };
+  const authorizationHeader = request.headers.get("auth0-authorization"); // authorization is those from Azure
   const jwtToken: string =
     parseTokenFromAuthorizationHeader(authorizationHeader);
   if (jwtToken !== null) {
@@ -24,7 +23,7 @@ const httpTrigger: AzureFunction = async function (
       now,
       AUTH0_PERMISSION.list_all_short_url
     );
-    context.log.info(`has ${AUTH0_PERMISSION.list_all_short_url}:${hasPermission}`)
+    context.log(`has ${AUTH0_PERMISSION.list_all_short_url}:${hasPermission}`)
     if (hasPermission !== false) {
       const items = await listAllLinks(auth0Domain);
       response.body = JSON.stringify(items);
@@ -36,7 +35,12 @@ const httpTrigger: AzureFunction = async function (
     response.body = JSON.stringify({ error: "NO TOKEN" })
   }
 
-  context.res = response;
-};
+  return response;
+}
 
-export default httpTrigger;
+app.http("list-short-url", {
+  methods: ["GET", "POST"],
+  authLevel: "anonymous",
+  route: "list-short-url",
+  handler: listShortUrl,
+});

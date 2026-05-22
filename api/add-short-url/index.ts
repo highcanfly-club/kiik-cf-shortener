@@ -1,4 +1,4 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions";
+import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
 import {
   isAllowed,
   parseTokenFromAuthorizationHeader,
@@ -12,13 +12,13 @@ const nanoid = customAlphabet(
   5
 );
 
-const httpTrigger: AzureFunction = async function (
-  context: Context,
-  request: HttpRequest
-): Promise<void> {
-  let response = { body: null as string };
+export async function addShortUrl(
+  request: HttpRequest,
+  context: InvocationContext
+): Promise<HttpResponseInit> {
   const auth0Domain: string = process.env.AUTH0_DOMAIN;
-  const authorizationHeader = request.headers["auth0-authorization"]; //authorization is those from Azure
+  let response: HttpResponseInit = { body: null as string };
+  const authorizationHeader = request.headers.get("auth0-authorization"); // authorization is those from Azure
   const jwtToken: string =
     parseTokenFromAuthorizationHeader(authorizationHeader);
   if (jwtToken !== null) {
@@ -37,22 +37,22 @@ const httpTrigger: AzureFunction = async function (
       AUTH0_PERMISSION.add_short_url
     );
     if (hasPermission !== false) {
-      context.log.info("permission OK");
+      context.log("permission OK");
       let slug: string;
       do {
         slug = nanoid();
-        context.log.info(slug);
+        context.log(slug);
       } while (await isShortLinkExists(slug, auth0Domain)); //ensure that the key is not already registred ()
 
-      const requestBody: {
+      const requestBody = (await request.json()) as {
         url: string;
         ttl: string | null;
         description?: string;
-      } = request.body;
+      };
       if ("url" in requestBody && "ttl" in requestBody) {
         const itemId = await addShortLink(
           slug,
-          request.body.url,
+          requestBody.url,
           parseInt(requestBody.ttl),
           requestBody.description,
           auth0Domain
@@ -78,7 +78,7 @@ const httpTrigger: AzureFunction = async function (
         response.body = JSON.stringify({ error: "Error with body" }, null, 3);
       }
     } else {
-      context.log.info("no permission");
+      context.log("no permission");
       response.body = JSON.stringify({ error: "WRONG PERMISSION", hasPermission: hasPermission,auth0Domain: auth0Domain, now: now, token: jwtToken, permission: AUTH0_PERMISSION.list_all_short_url }, null, 3);
     }
   } else {
@@ -89,7 +89,12 @@ const httpTrigger: AzureFunction = async function (
       3
     );
   }
-  context.res = response;
-};
+  return response;
+}
 
-export default httpTrigger;
+app.http("add-short-url", {
+  methods: ["GET", "POST"],
+  authLevel: "anonymous",
+  route: "add-short-url",
+  handler: addShortUrl,
+});
