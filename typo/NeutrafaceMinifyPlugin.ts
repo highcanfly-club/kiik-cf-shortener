@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import * as fsc from "fs";
 import path from "path";
 import { Transform } from "stream";
-import glob from "glob";
+import {glob} from "glob";
 import Fontminify from "@sctg/fontminify";
 import { Plugin, UserConfig, ResolvedConfig } from "vite";
 import colors from "picocolors";
