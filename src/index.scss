@@ -1,8 +1,3 @@
-@import "@highcanfly-club/fontawesome/styles/fontawesome.css";
-@config "../tailwind.config.cjs";
-@import "tailwindcss";
-@import "./tailwind-theme.css";
-
 @import './assets/typo/NeutrafaceText-Bold.css';
 @import './assets/typo/NeutrafaceText-BoldAlt.css';
 @import './assets/typo/NeutrafaceText-BoldSC.css';
@@ -16,3 +11,8 @@
 @import './assets/typo/NeutrafaceText-Light.css';
 @import './assets/typo/NeutrafaceText-LightSC.css';
 @import './assets/typo/NeutrafaceText-LightItalic.css';
+// @config "../tailwind.config.cjs";
+@import "tailwindcss";
+@import "./tailwind-theme.css";
+
+

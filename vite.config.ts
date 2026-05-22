@@ -13,12 +13,27 @@ import vitePluginFontawesomeminify from '@highcanfly-club/fontawesome'
 import vitePluginNeutrafaceMinify from "./typo/NeutrafaceMinifyPlugin.js"
 import fs from 'fs'
 
+function copyFontawesomeWebfonts() {
+  return {
+    name: 'copy-fontawesome-webfonts',
+    closeBundle() {
+      const src = path.resolve(__dirname, 'node_modules/@highcanfly-club/fontawesome/webfonts')
+      const dst = path.resolve(__dirname, 'dist/webfonts')
+      if (fs.existsSync(src)) {
+        fs.mkdirSync(dst, { recursive: true })
+        fs.cpSync(src, dst, { recursive: true })
+      }
+    },
+  }
+}
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     vitePluginFontawesomeminify(),
     vitePluginNeutrafaceMinify(),
+    copyFontawesomeWebfonts(),
   ],
   resolve: {
     alias: {

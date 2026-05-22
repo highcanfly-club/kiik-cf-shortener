@@ -14,6 +14,7 @@ import { initAuth0 } from "@/auth0";
 import auth0conf from "@/config/auth0-conf.json";
 import { createI18n } from "vue-i18n";
 import { createPinia } from "pinia";
+import "@highcanfly-club/fontawesome/styles/fontawesome.css";
 import "@/index.scss";
 
 import enUS from "@/locales/en-US.json";

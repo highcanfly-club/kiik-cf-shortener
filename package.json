@@ -33,7 +33,6 @@
   "devDependencies": {
     "@azure/static-web-apps-cli": "2.0.9",
     "@babel/types": "^7.29.0",
-    "@fullhuman/postcss-purgecss": "^8.0.0",
     "@highcanfly-club/fontawesome": "^1.2.0",
     "@sctg/code-stats": "^0.1.4",
     "@sctg/fontminify": "^1.0.4",
