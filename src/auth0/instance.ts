@@ -78,6 +78,23 @@ interface Auth0InitConfig<AppStateType> extends Auth0ClientOptions {
   redirectUri?: string;
 }
 
+function shouldInvalidateSession(error: unknown): boolean {
+  const authError = error as { error?: string; message?: string };
+  const code = authError?.error ?? "";
+  const message = (authError?.message ?? "").toLowerCase();
+
+  if (["login_required", "consent_required", "invalid_grant", "missing_refresh_token"].includes(code)) {
+    return true;
+  }
+
+  return (
+    message.includes("login_required") ||
+    message.includes("missing refresh token") ||
+    message.includes("invalid_grant") ||
+    message.includes("consent required")
+  );
+}
+
 /** Define a default action to perform after authentication */
 const DEFAULT_REDIRECT_CALLBACK: RedirectCallback = () =>
   window.history.replaceState({}, document.title, window.location.pathname)
@@ -117,6 +134,18 @@ export function initAuth0<AppStateType> ({
     error: undefined
   })
 
+  const invalidateLocalSession = async (error?: unknown) => {
+    state.error = error;
+    state.isAuthenticated = false;
+    state.user = undefined;
+    try {
+      // Clear local Auth0 cache without redirecting away from the app.
+      await state.auth0Client.logout({ openUrl: false } as never);
+    } catch {
+      // Ignore cleanup failures, state is already reset.
+    }
+  };
+
   /** Instantiate the SDK client */
   void (async () => {
     // Create a new instance of the SDK client using members of the given options object
@@ -146,6 +175,17 @@ export function initAuth0<AppStateType> ({
       // Initialize our internal authentication state
       state.isAuthenticated = await state.auth0Client.isAuthenticated()
       state.user = await state.auth0Client.getUser()
+      if (state.isAuthenticated) {
+        try {
+          await state.auth0Client.getTokenSilently({ detailedResponse: false });
+        } catch (e) {
+          if (shouldInvalidateSession(e)) {
+            await invalidateLocalSession(e);
+          } else {
+            state.error = e;
+          }
+        }
+      }
       state.loading = false
     }
   })()
@@ -204,18 +244,32 @@ export function initAuth0<AppStateType> ({
 
   /** Returns the access token. If the token is invalid or missing, a new one is retrieved */
   const getTokenSilently = (options: GetTokenSilentlyOptions = {}) => {
-    return state.auth0Client.getTokenSilently({
-      ...options,
-      detailedResponse: false
-    })
+    return state.auth0Client
+      .getTokenSilently({
+        ...options,
+        detailedResponse: false
+      })
+      .catch(async (e) => {
+        if (shouldInvalidateSession(e)) {
+          await invalidateLocalSession(e);
+        }
+        throw e;
+      })
   }
 
   /** Fetches a new access token and returns the response from the /oauth/token endpoint, omitting the refresh token */
   const getTokenSilentlyVerbose = (options: GetTokenSilentlyOptions = {}) => {
-    return state.auth0Client.getTokenSilently({
-      ...options,
-      detailedResponse: true
-    })
+    return state.auth0Client
+      .getTokenSilently({
+        ...options,
+        detailedResponse: true
+      })
+      .catch(async (e) => {
+        if (shouldInvalidateSession(e)) {
+          await invalidateLocalSession(e);
+        }
+        throw e;
+      })
   }
 
   /** Gets the access token using a popup window */
