@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "engines": {
-    "node": ">=16.14.2"
+    "node": ">=24"
   },
   "type": "module",
   "scripts": {
@@ -18,11 +18,11 @@
   "dependencies": {
     "@auth0/auth0-spa-js": "^2.20.0",
     "@azure/cosmos": "^4.9.3",
+    "@azure/functions": "^4.16.0",
     "jose": "^6.2.3",
     "nanoid": "^5.1.11"
   },
   "devDependencies": {
-    "@azure/functions": "^4.16.0",
     "@types/node": "25.9.1",
     "tsx": "4.22.3",  
     "typescript": "^6.0.3"

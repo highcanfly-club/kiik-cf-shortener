@@ -1,7 +1,7 @@
 /*generate auth0-conf.json*/
 import fs from "fs"
 import https from "https"
-import packageJsonLock from "./package-lock.json" assert {type:"json"}
+import packageJsonLock from "./package-lock.json" with {type:"json"}
 import {LineCount} from "@sctg/code-stats"
 
 const results = await LineCount.countLines(['src','api/add-short-url','api/autoroute','api/common','api/list-short-url','api/redirect'])
@@ -96,10 +96,10 @@ const auth0Conf = {
 
   /*generate versions.json*/
 const versions = {
-  cosmosDBSdkVersion: packageJsonLock.dependencies["@azure/cosmos"].version,
-  auth0SdkVersion: packageJsonLock.dependencies["@auth0/auth0-spa-js"].version,
-  viteVersion: packageJsonLock.dependencies.vite.version,
-  vueVersion: packageJsonLock.dependencies.vue.version,
+  cosmosDBSdkVersion: packageJsonLock.packages["node_modules/@azure/cosmos"].version,
+  auth0SdkVersion: packageJsonLock.packages["node_modules/@auth0/auth0-spa-js"].version,
+  viteVersion: packageJsonLock.packages["node_modules/vite"].version,
+  vueVersion: packageJsonLock.packages["node_modules/vue"].version,
 };
 fs.writeFile(
   "./src/config/versions.json",

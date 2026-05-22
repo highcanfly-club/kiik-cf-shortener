@@ -5,7 +5,7 @@ import packageJsonLock from './package-lock.json' assert {type:'json'}
 
 /*generate auth0-conf.json*/
 const auth0Conf = {
-  "auth0SdkVersion": packageJsonLock.dependencies["@auth0/auth0-spa-js"].version,
+  "auth0SdkVersion": packageJsonLock.packages["node_modules/@auth0/auth0-spa-js"].version,
   "domain": process.env.AUTH0_DOMAIN,
   "clientId": process.env.AUTH0_CLIENT_ID,
   "useRefreshTokens": true,

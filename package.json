@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": ">=16.14.2"
+    "node": ">=24"
   },
   "scripts": {
     "prepare-env": "npx tsx ./prepare-env.ts && echo '//DON T EDIT THIS FILE IT IS A COPY OF src/auth0/TokenHelper.ts' > api/common/auth0/TokenHelper.ts && cat src/auth0/TokenHelper.ts >> api/common/auth0/TokenHelper.ts",
@@ -45,7 +45,7 @@
     "@vitejs/plugin-vue": "^6.0.7",
     "autoprefixer": "^10.5.0",
     "glob": "13.0.6",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.1",
     "gulp-append-prepend": "^1.0.9",
     "gulp-replace": "^1.1.4",
     "npm-check-updates": "^22.2.0",

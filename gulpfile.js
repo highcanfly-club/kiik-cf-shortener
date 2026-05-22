@@ -45,7 +45,7 @@ This website use:
 gulp.task("licenses", async function () {
   // this is to add Copyright in the production mode for the minified js
   gulp
-    .src("dist/js/*.js", { base: "./" })
+    .src("dist/assets/*.js", { base: "./" })
     .pipe(
       gap.prependText(`/*!
 =========================================================
@@ -74,7 +74,7 @@ This website use:
 
   // this is to add Copyright in the production mode for the minified css
   gulp
-    .src("dist/css/*.css", { base: "./" })
+    .src("dist/assets/*.css", { base: "./" })
     .pipe(
       gap.prependText(`/*!
 =========================================================
