@@ -5,6 +5,8 @@
     "outDir": "dist",
     "esModuleInterop": true,
     "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
+    "types": ["node"],
     "resolveJsonModule": true,
     "rootDir": ".",
     "baseUrl": ".",

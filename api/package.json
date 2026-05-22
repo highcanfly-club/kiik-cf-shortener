@@ -7,7 +7,7 @@
   },
   "type": "module",
   "scripts": {
-    "prepare-env": "npx tsx./prepare-env.ts",
+    "prepare-env": "npx tsx ./prepare-env.ts",
     "build": "npm run prepare-env && tsc",
     "watch": "tsc -w",
     "prestart": "npm run build",
@@ -21,7 +21,7 @@
     "nanoid": "^5.1.11"
   },
   "devDependencies": {
-    "@azure/functions": "^4.16.0",
+    "@azure/functions": "^3.5.1",
     "@types/node": "25.9.1",
     "tsx": "4.22.3",  
     "typescript": "^6.0.3"
