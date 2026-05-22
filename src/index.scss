@@ -1,7 +1,7 @@
 @import "@highcanfly-club/fontawesome/styles/fontawesome.css";
-@import '~/tailwindcss/base.css';
-@import '~/tailwindcss/components.css';
-@import '~/tailwindcss/utilities.css';
+@config "../tailwind.config.cjs";
+@import "tailwindcss";
+@import "./tailwind-theme.css";
 
 @import '@/assets/typo/NeutrafaceText-Bold.css';
 @import '@/assets/typo/NeutrafaceText-BoldAlt.css';

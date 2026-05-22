@@ -1,6 +1,6 @@
 /*!
 =========================================================
-* © 2022 Ronan LE MEILLAT for %CLIENT_NAME%
+* © 2022-2026 Ronan LE MEILLAT for %CLIENT_NAME%
 =========================================================
 This website use:
 - Vite, Vue3, FontAwesome 6, TailwindCss 3
@@ -16,7 +16,7 @@ gulp.task("licensesSrc", async function () {
     .pipe(
       gap.prependText(`/*!
 =========================================================
-* © 2022 Ronan LE MEILLAT for %CLIENT_NAME%
+* © 2022-2026 Ronan LE MEILLAT for %CLIENT_NAME%
 =========================================================
 This website use:
 - Vite, Vue3, FontAwesome 6, TailwindCss 3
@@ -32,7 +32,7 @@ This website use:
     .pipe(
       gap.prependText(`<!--
 =========================================================
-* © 2022 Ronan LE MEILLAT for %CLIENT_NAME%
+* © 2022-2026 Ronan LE MEILLAT for %CLIENT_NAME%
 =========================================================
 This website use:
 - Vite, Vue3, FontAwesome 6, TailwindCss 3
@@ -49,7 +49,7 @@ gulp.task("licenses", async function () {
     .pipe(
       gap.prependText(`/*!
 =========================================================
-* © 2022 Ronan LE MEILLAT for %CLIENT_NAME%
+* © 2022-2026 Ronan LE MEILLAT for %CLIENT_NAME%
 =========================================================
 This website use:
 - Vite, Vue3, FontAwesome 6, TailwindCss 3
@@ -63,7 +63,7 @@ This website use:
     .pipe(
       gap.prependText(`<!--
 =========================================================
-* © 2022 Ronan LE MEILLAT for %CLIENT_NAME%
+* © 2022-2026 Ronan LE MEILLAT for %CLIENT_NAME%
 =========================================================
 This website use:
 - Vite, Vue3, FontAwesome 6, TailwindCss 3
@@ -78,7 +78,7 @@ This website use:
     .pipe(
       gap.prependText(`/*!
 =========================================================
-* © 2022 Ronan LE MEILLAT for %CLIENT_NAME%
+* © 2022-2026 Ronan LE MEILLAT for %CLIENT_NAME%
 =========================================================
 This website use:
 - Vite, Vue3, FontAwesome 6, TailwindCss 3

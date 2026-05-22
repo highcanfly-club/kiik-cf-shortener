@@ -1,6 +1,6 @@
 /*!
 =========================================================
-* © 2022 Ronan LE MEILLAT for %CLIENT_NAME%
+* © 2022-2026 Ronan LE MEILLAT for %CLIENT_NAME%
 =========================================================
 This website use:
 - Vite, Vue3, FontAwesome 6, TailwindCss 3

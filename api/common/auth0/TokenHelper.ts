@@ -1,7 +1,7 @@
 //DON T EDIT THIS FILE IT IS A COPY OF src/auth0/TokenHelper.ts
 /*!
 =========================================================
-* © 2022 Ronan LE MEILLAT for INTERNAL DEVELOPMENT
+* © 2022-2026 Ronan LE MEILLAT for INTERNAL DEVELOPMENT
 =========================================================
 This website use:
 - Vuejs v3

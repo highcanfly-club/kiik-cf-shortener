@@ -1,18 +1,18 @@
 /*!
 =========================================================
-* © 2022 Ronan LE MEILLAT for %CLIENT_NAME%
+* © 2022-2026 Ronan LE MEILLAT for %CLIENT_NAME%
 =========================================================
 This website use:
 - Vite, Vue3, FontAwesome 6, TailwindCss 3
 - And many others
 */
-import tailwindcss from 'tailwindcss'
+import tailwindcss from '@tailwindcss/postcss'
 import autoprefixer from 'autoprefixer'
 import purgecss from '@fullhuman/postcss-purgecss'
 
 export default {
   plugins: [
-    tailwindcss,
+    tailwindcss(),
     autoprefixer,
     (process.env.NODE_ENV !== 'development') ? purgecss({
       content: ['./index.html', './src/**/*.ts', './src/**/*.js', './src/**/*.vue'],

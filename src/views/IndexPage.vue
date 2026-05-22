@@ -1,6 +1,6 @@
 <!--
 =========================================================
-* © 2022 Ronan LE MEILLAT for INTERNAL DEVELOPMENT
+* © 2022-2026 Ronan LE MEILLAT for INTERNAL DEVELOPMENT
 =========================================================
 This website use:
 - Vite, Vue3, FontAwesome 6, TailwindCss 3
