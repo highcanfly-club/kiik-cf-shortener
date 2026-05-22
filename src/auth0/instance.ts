@@ -101,7 +101,10 @@ const DEFAULT_REDIRECT_CALLBACK: RedirectCallback = () =>
 
 let _instance: Auth0Instance | undefined
 
-/** Returns the current instance of the SDK */
+/**
+ * Returns the current instance of the SDK.
+ * Throws an error if initAuth0 has not been called yet.
+ */
 export function useAuth0 () {
   if (!_instance) {
     throw new Error(
@@ -112,7 +115,10 @@ export function useAuth0 () {
   return _instance
 }
 
-/** Creates an instance of the Auth0 SDK. If one has already been created, it returns that instance */
+/**
+ * Creates and initializes an instance of the Auth0 SDK.
+ * If an instance already exists, it returns the existing one.
+ */
 export function initAuth0<AppStateType> ({
   onRedirectCallback = DEFAULT_REDIRECT_CALLBACK,
   redirectUri = window.location.origin,
@@ -331,3 +337,4 @@ export function initAuth0<AppStateType> ({
 
   return _instance
 }
+

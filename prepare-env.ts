@@ -4,6 +4,9 @@ import https from "https"
 import packageJsonLock from "./package-lock.json" with {type:"json"}
 import {LineCount} from "@sctg/code-stats"
 
+/**
+ * Counts lines of code in the specified directories and saves the result to a JSON file.
+ */
 const results = await LineCount.countLines(['src','api/add-short-url','api/autoroute','api/common','api/list-short-url','api/redirect'])
 fs.writeFile(
   "./src/config/codeStats.json",
@@ -14,6 +17,9 @@ fs.writeFile(
   }
 );
 
+/**
+ * Prepares Auth0 configuration based on environment variables.
+ */
 const auth0Conf = {
     "domain": process.env.AUTH0_DOMAIN,
     "clientId": process.env.AUTH0_CLIENT_ID,
@@ -31,6 +37,9 @@ const auth0Conf = {
     }
   );
 
+  /**
+   * Interface representing Auth0 JSON Web Key Set (JWKS).
+   */
   export interface Auth0JWKS {
     alg: string;
     kty: string;
@@ -44,6 +53,10 @@ const auth0Conf = {
     namespace: string;
   }
   
+  /**
+   * Fetches JWKS from Auth0 domain.
+   * @returns A promise resolving to Auth0JWKS.
+   */
   async function getJwks() {
     console.log(
       `retrieve https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
@@ -70,6 +83,9 @@ const auth0Conf = {
     });
   }
   
+  /**
+   * Saves JWKS to configuration files for both frontend and backend.
+   */
   (async () => {
     const jwks = await getJwks();
     fs.writeFile(
@@ -94,7 +110,9 @@ const auth0Conf = {
     );
   })();
 
-  /*generate versions.json*/
+/**
+ * Extracts SDK and framework versions from package-lock.json and saves them.
+ */
 const versions = {
   cosmosDBSdkVersion: packageJsonLock.packages["node_modules/@azure/cosmos"].version,
   auth0SdkVersion: packageJsonLock.packages["node_modules/@auth0/auth0-spa-js"].version,
@@ -110,7 +128,9 @@ fs.writeFile(
   }
 );
 
-  //Install necessary flags
+/**
+ * Copies flag SVG files based on available languages.
+ */
 import {availableLanguages} from './src/config/locales.js'
 availableLanguages.forEach((lang)=>{
   const baseFile = lang.substring(3).toLowerCase()

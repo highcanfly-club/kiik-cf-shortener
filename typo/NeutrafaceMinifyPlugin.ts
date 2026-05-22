@@ -15,10 +15,16 @@ const SHA256_8_REGEX = /(NeutrafaceText.*)\.(.*)\.(eot|ttf|svg|woff|woff2)$/;
 const BASE_DIR = "dist/assets";
 const GLYPH_WHITELIST = [""];
 
+/**
+ * Helper to colorize string yellow for terminal output.
+ */
 function makeYellow(str: string) {
   return colors.yellow(str);
 }
 
+/**
+ * Enum for supported font file types.
+ */
 const enum WriteType {
   TTF,
   EOT,
@@ -27,27 +33,29 @@ const enum WriteType {
   SVG,
 }
 
+/**
+ * Determines the WriteType based on file extension.
+ * @param file - Filename or path.
+ */
 function getWriteType(file: string): WriteType {
   switch (path.extname(file).toUpperCase()) {
     case ".TTF":
       return WriteType.TTF;
-      break;
     case ".EOT":
       return WriteType.EOT;
-      break;
     case ".WOFF":
       return WriteType.WOFF;
-      break;
     case ".WOFF2":
       return WriteType.WOFF2;
-      break;
     case ".SVG":
       return WriteType.SVG;
-      break;
   }
   return WriteType.TTF;
 }
 
+/**
+ * Color mapping for different font types in console logs.
+ */
 const writeColors = {
   [WriteType.TTF]: colors.cyan,
   [WriteType.EOT]: colors.magenta,
@@ -56,6 +64,9 @@ const writeColors = {
   [WriteType.SVG]: colors.gray,
 };
 
+/**
+ * Prints detailed file information to the Vite logger.
+ */
 function printFileInfo(
   filebase: string,
   filename: string,
@@ -75,6 +86,9 @@ function printFileInfo(
   );
 }
 
+/**
+ * Lists files in a directory that match a specific regex.
+ */
 function getFileList(baseDir: string, regex: RegExp): Promise<string[]> {
   return new Promise((resolve) => {
     fs.readdir(baseDir).then((files) => {
@@ -88,10 +102,10 @@ function getFileList(baseDir: string, regex: RegExp): Promise<string[]> {
   });
 }
 
+/**
+ * Options for the Neutraface Minify plugin.
+ */
 interface vitePluginNeutrafaceMinifyOptions {
-  /**
-   * rebuild cesium library, default: false
-   */
   ttfRegex?: RegExp;
   fontRegex?: RegExp;
   baseDir?: string;
@@ -102,6 +116,9 @@ interface vitePluginNeutrafaceMinifyOptions {
   neutraTTFFontFilter?: string;
 }
 
+/**
+ * Vite Plugin to minify Neutraface fonts by keeping only used glyphs found in locales.
+ */
 export default function vitePluginNeutrafaceMinify(
   options: vitePluginNeutrafaceMinifyOptions = {}
 ): Plugin {
@@ -144,9 +161,11 @@ export default function vitePluginNeutrafaceMinify(
             processes.push(getGlyphs(localesDir, _file));
           });
           Promise.all(processes).then((glyphs) => {
+            // Merge all glyphs from locales and whitelist
             const glyphsAndWhiteList = [
               ...new Set(glyphs.concat(glyphWhitelist).join("")),
             ].join(",");
+
             const fontmin = new Fontminify()
               .use(
                 Fontminify.glyph({
@@ -156,18 +175,17 @@ export default function vitePluginNeutrafaceMinify(
               )
               .src(`${BASE_DIR}/${neutraTTFFontFilter}`)
               .dest(`${BASE_DIR}/`)
-              //.use(Fontmin.ttf2eot())
               .use(
                 Fontminify.ttf2woff({
                   deflate: true,
                 })
               )
               .use(Fontminify.ttf2woff2());
-            //.use(Fontmin.ttf2svg())
+
+            // Transform stream to handle hashed filenames during build
             fontmin.use(
               new Transform({
                 objectMode: true,
-                // allowHalfOpen: false,
                 transform(chunk, enc, callback) {
                   if (chunk && chunk.path) {
                     const splitPath = chunk.path.match(SHA256_8_REGEX);
@@ -179,7 +197,6 @@ export default function vitePluginNeutrafaceMinify(
                           const origSplitted = matches[0].match(SHA256_8_REGEX);
                           chunk.basename = `${origSplitted[1]}.${origSplitted[2]}.${origSplitted[3]}`;
                           fsc.statSync(`${BASE_DIR}/${chunk.basename}`);
-                          //printFileInfo(baseDir, chunk.basename, dstFileStat.size, getWriteType(chunk.basename), 70, config)
                         }
                       });
                     }
@@ -188,6 +205,7 @@ export default function vitePluginNeutrafaceMinify(
                 },
               })
             );
+
             fontmin.run((err: Error) => {
               getFileList(baseDir, fontRegex).then((files) => {
                 config.logger.info(makeYellow("After Neutraface minification"));
@@ -214,6 +232,12 @@ export default function vitePluginNeutrafaceMinify(
   };
 }
 
+/**
+ * Extracts unique glyphs (characters) from a file.
+ * @param baseDir - Base directory.
+ * @param file - Filename.
+ * @returns A promise resolving to an array of unique characters.
+ */
 function getGlyphs(baseDir: string, file: string): Promise<string[]> {
   return new Promise((resolve) => {
     fs.readFile(`${baseDir}/${file}`, { encoding: "utf8" }).then((data) => {
@@ -224,3 +248,4 @@ function getGlyphs(baseDir: string, file: string): Promise<string[]> {
     });
   });
 }
+

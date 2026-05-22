@@ -7,11 +7,11 @@
         class="text-xs font-neutra-bold text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
       >
         <tr>
-          <th scope="col" class="py-3 px-6">{{ $t("short_link") }}</th>
-          <th scope="col" class="py-3 px-6">{{ $t("short_link") }}</th>
-          <th scope="col" class="py-3 px-6">{{ $t("target") }}</th>
-          <th scope="col" class="py-3 px-6">{{ $t("description") }}</th>
-          <th scope="col" class="py-3 px-6">{{ $t("expiration") }}</th>
+          <th scope="col" class="py-3 px-6">{{ t("short_link") }}</th>
+          <th scope="col" class="py-3 px-6">{{ t("short_link") }}</th>
+          <th scope="col" class="py-3 px-6">{{ t("target") }}</th>
+          <th scope="col" class="py-3 px-6">{{ t("description") }}</th>
+          <th scope="col" class="py-3 px-6">{{ t("expiration") }}</th>
         </tr>
       </thead>
       <tbody>
@@ -56,6 +56,9 @@ import QrCodeComponent from "@/components/ui/QrCodeComponent.vue";
 
 const { locale } = useI18n({});
 
+/**
+ * Element structure for the link data.
+ */
 interface kvStoreElement {
   name: string;
   value: string;
@@ -68,7 +71,14 @@ const canonical = new URL(window.location.origin);
 const canListShortUrl = ref(false);
 const kvData = ref(null as unknown as kvStore);
 const $auth0 = getAuth0();
+const { t } = useI18n({});
 
+/**
+ * On component mount:
+ * 1. Retrieve the Auth0 token silently.
+ * 2. Check if the user has permission to list short URLs.
+ * 3. If allowed, fetch the list from the internal API.
+ */
 onMounted(() => {
   $auth0
     .getTokenSilentlyVerbose()
@@ -103,3 +113,4 @@ onMounted(() => {
     });
 });
 </script>
+

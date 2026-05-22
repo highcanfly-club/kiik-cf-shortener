@@ -12,6 +12,11 @@ const nanoid = customAlphabet(
   5
 );
 
+/**
+ * Azure Function to create a new short URL.
+ * Generates a unique slug using nanoid and saves the mapping to CosmosDB.
+ * Requires AUTH0_PERMISSION.add_short_url.
+ */
 export async function addShortUrl(
   request: HttpRequest,
   context: InvocationContext
@@ -39,6 +44,7 @@ export async function addShortUrl(
     if (hasPermission !== false) {
       context.log("permission OK");
       let slug: string;
+      // Loop until a unique slug is found
       do {
         slug = nanoid();
         context.log(slug);
@@ -92,9 +98,13 @@ export async function addShortUrl(
   return response;
 }
 
+/**
+ * Register the HTTP trigger for add-short-url.
+ */
 app.http("add-short-url", {
   methods: ["GET", "POST"],
   authLevel: "anonymous",
   route: "add-short-url",
   handler: addShortUrl,
 });
+

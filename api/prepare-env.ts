@@ -3,7 +3,9 @@ import fs from "fs";
 import https from "https";
 import packageJsonLock from './package-lock.json' assert {type:'json'}
 
-/*generate auth0-conf.json*/
+/**
+ * Generates Auth0 configuration file based on environment variables and package versions.
+ */
 const auth0Conf = {
   "auth0SdkVersion": packageJsonLock.packages["node_modules/@auth0/auth0-spa-js"].version,
   "domain": process.env.AUTH0_DOMAIN,
@@ -24,6 +26,9 @@ fs.writeFile(
   }
 );
 
+/**
+ * Structure of a JSON Web Key in a JWKS.
+ */
 export interface KeyJWKS {
   alg: string;
   kty: string;
@@ -34,14 +39,26 @@ export interface KeyJWKS {
   x5t: string;
   x5c: string[];
 }
+
+/**
+ * Structure of the JWKS response.
+ */
 export interface JWKS {
   keys:KeyJWKS[];
 }
+
+/**
+ * Extended JWKS structure including domain and custom namespace.
+ */
 export interface Auth0JWKS extends JWKS {
   domain: string;
   namespace: string;
 }
 
+/**
+ * Fetches the Auth0 JWKS from the configured domain.
+ * @returns A promise resolving to an Auth0JWKS object.
+ */
 async function getJwks() {
   console.log(
     `retrieve https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
@@ -70,6 +87,9 @@ async function getJwks() {
   });
 }
 
+/**
+ * Main execution: fetch JWKS and save it to the common config directory.
+ */
 (async () => {
   const jwks = await getJwks();
   fs.writeFile(
@@ -81,3 +101,4 @@ async function getJwks() {
     }
   );
 })();
+

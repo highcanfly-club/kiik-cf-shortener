@@ -12,6 +12,10 @@ import ListShortLinks from '@/auth0/ListShortLinks.vue';
 import { getAuth0 } from '@/auth0';
 const $auth0 = getAuth0()
 
+/**
+ * Checks if the user is currently authenticated via Auth0.
+ * @returns true if authenticated and user data is available.
+ */
 function isAuthenticated(): boolean {
     return ((typeof $auth0.user !== 'undefined') && ($auth0.isAuthenticated.value))
 }

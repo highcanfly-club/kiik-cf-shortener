@@ -10,7 +10,7 @@ This website use:
 <template>
   <div>
     <h3 class="text-slate-800" v-if="formerrors.length">
-      <b>{{ $t('error_in_form') }}</b>
+      <b>{{ t('error_in_form') }}</b>
       <ul>
         <li v-for="error in formerrors" :key="error">
           <!-- eslint-disable-line -->
@@ -20,16 +20,16 @@ This website use:
     </h3>
     <form v-if="canAddShortUrl" @submit="checkForm" @submit.prevent="submitForm">
       <label for="longurl" class="mt-1 block text-slate-800">
-        {{ $t('long_url') }}
+        {{ t('long_url') }}
       </label>
-      <input type="text" name="longurl" v-model="longurl" id="longurl" :placeholder="$t('enter_the_long_url')"
+      <input type="text" name="longurl" v-model="longurl" id="longurl" :placeholder="t('enter_the_long_url')"
         class="w-full bg-slate-200 rounded border text-slate-800 focus:bg-slate-400 mb-2" />
       <template v-if="expiration == 0">
         <label for="description" class="mt-1 block text-slate-800">
-          {{ $t('description') }}
+          {{ t('description') }}
         </label>
         <input type="text" name="description" v-model="description" id="description"
-          :placeholder="$t('enter_description')" class="
+          :placeholder="t('enter_description')" class="
             w-full
             bg-slate-200
             rounded
@@ -39,7 +39,7 @@ This website use:
             mb-2
           " />
         <label for="ttl" class="m1-1 block text-slate-800">
-          {{ $t('expiration') }}
+          {{ t('expiration') }}
         </label>
         <select name="ttl" id="input-ttl" v-model="linkTtl" class="
             text-xs
@@ -49,21 +49,21 @@ This website use:
             text-slate-800
             focus:bg-slate-400
           ">
-          <option value="60">60 {{$t('second',2)}}</option>
-          <option value="3600">1 {{$t('hour',1)}}</option>
-          <option value="21600">6 {{$t('hour',2)}}</option>
-          <option value="43200">12 {{$t('hour',2)}}</option>
+          <option value="60">60 {{t('second',2)}}</option>
+          <option value="3600">1 {{t('hour',1)}}</option>
+          <option value="21600">6 {{t('hour',2)}}</option>
+          <option value="43200">12 {{t('hour',2)}}</option>
           <option value="86400" selected>
-            1 {{$t('day',1)}}
+            1 {{t('day',1)}}
           </option>
-          <option value="604800">1 {{$t('week',1)}}</option>
-          <option value="2592000">1 {{$t('month',1)}}</option>
-          <option value="15778476">6 {{$t('month',2)}}</option>
-          <option value="31556952">1 {{$t('year',1)}}</option>
-          <option value="2145872736">68 {{$t('year',2)}}</option>
+          <option value="604800">1 {{t('week',1)}}</option>
+          <option value="2592000">1 {{t('month',1)}}</option>
+          <option value="15778476">6 {{t('month',2)}}</option>
+          <option value="31556952">1 {{t('year',1)}}</option>
+          <option value="2145872736">68 {{t('year',2)}}</option>
         </select>
         <div v-if="!formVerified" class="mt-4">
-          <light-button :text="$t('add')" type="submit" />
+          <light-button :text="t('add')" type="submit" />
           <hr-dotted />
         </div>
       </template>
@@ -83,8 +83,10 @@ import jwks from "@/config/jwks.json";
 import { Auth0Instance } from "./instance";
 import LightButton from "@/components/ui/LightButton.vue";
 import HrDotted from "@/components/ui/HRDotted.vue";
+import { useI18n } from "vue-i18n";
 
-const $auth0 = getCurrentInstance().appContext.app.config.globalProperties.$auth0 as Auth0Instance
+const { t } = useI18n();
+const $auth0 = getCurrentInstance()?.appContext.app.config.globalProperties.$auth0 as Auth0Instance
 const token = ref("");
 const canAddShortUrl = ref(false);
 const formerrors = ref([] as string[]);
@@ -96,6 +98,10 @@ const slug = ref("");
 const expiration = ref(0);
 const canonical = new URL(window.location.origin);
 
+/**
+ * Initial Auth check on component setup.
+ * Fetches token and verifies 'add:any_short_url' permission.
+ */
 $auth0.getTokenSilentlyVerbose().then((_token: { id_token: string, access_token: string }) => {
   token.value = _token.access_token;
   isAllowed(
@@ -112,6 +118,10 @@ $auth0.getTokenSilentlyVerbose().then((_token: { id_token: string, access_token:
   console.log(error)
 });
 
+/**
+ * Validates if a string is a properly formatted HTTP/HTTPS URL.
+ * @param string - The URL to validate.
+ */
 const isValidHttpUrl = function (string: string): boolean {
   let url: URL;
 
@@ -124,7 +134,11 @@ const isValidHttpUrl = function (string: string): boolean {
   return url.protocol === "http:" || url.protocol === "https:";
 }
 
-const checkForm = function (e: Event): boolean {
+/**
+ * Validates the form fields before submission.
+ * @param e - The submit event.
+ */
+const checkForm = function (e: Event): boolean | void {
   if (
     longurl.value.length &&
     isValidHttpUrl(longurl.value) &&
@@ -145,6 +159,9 @@ const checkForm = function (e: Event): boolean {
   e.preventDefault();
 }
 
+/**
+ * Submits the form data to the internal API to create a new short URL.
+ */
 const submitForm = function (): void {
 
   if (!formerrors.value.length && formVerified.value && canAddShortUrl.value) {
@@ -176,3 +193,4 @@ const submitForm = function (): void {
   }
 }
 </script>
+

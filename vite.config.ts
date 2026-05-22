@@ -13,6 +13,10 @@ import vitePluginFontawesomeminify from '@highcanfly-club/fontawesome'
 import vitePluginNeutrafaceMinify from "./typo/NeutrafaceMinifyPlugin.js"
 import fs from 'fs'
 
+/**
+ * Custom Vite plugin to copy FontAwesome webfonts to the distribution directory.
+ * This is executed after the build bundle is closed.
+ */
 function copyFontawesomeWebfonts() {
   return {
     name: 'copy-fontawesome-webfonts',
@@ -36,6 +40,7 @@ export default defineConfig({
     copyFontawesomeWebfonts(),
   ],
   resolve: {
+    // Paths aliases for cleaner imports
     alias: {
       '@': path.resolve(__dirname, './src'),
       '~': path.resolve(__dirname, './node_modules'),
@@ -43,6 +48,7 @@ export default defineConfig({
     },
   },
   server: {
+    // HTTPS configuration if local certificates are present
     https: fs.existsSync("./localhost.key") ?
     {
       key: fs.readFileSync("./localhost.key"),
@@ -50,3 +56,4 @@ export default defineConfig({
     } : false,
   }
 })
+

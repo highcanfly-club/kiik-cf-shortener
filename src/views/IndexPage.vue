@@ -49,12 +49,22 @@ import ChangLang from '@/utilities/ChangLang.vue';
 import BlockFooter from '@/components/footers/BlockFooter.vue';
 import BlockHeader from '../components/headers/BlockHeader.vue';
 
+/**
+ * Redirects the browser to a specific URL.
+ * @param to - The destination URL string.
+ */
 function redirect(to: string) {
   window.location.href = to
 }
 
+/**
+ * Redirects to the internal API redirection endpoint.
+ * Handles shorthand notation (starting with '!') by stripping the character.
+ * @param to - The target short link or path.
+ */
 function redirectApi(to: string) {
   const _to = to.startsWith('!') ? to.substring(1) : to
   window.location.href = window.location.origin +'/api/redirect?to=' + _to
 }
 </script>
+

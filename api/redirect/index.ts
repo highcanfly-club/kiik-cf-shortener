@@ -1,6 +1,10 @@
 import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/functions";
 import { getLongUrl } from "../common/cosmosdb.js";
 
+/**
+ * Azure Function to handle redirection from a short URL to its original destination.
+ * Retrieves the long URL from CosmosDB based on the provided slug.
+ */
 export async function redirect(
     request: HttpRequest,
     context: InvocationContext
@@ -11,6 +15,7 @@ export async function redirect(
     const body = (await request.json().catch(() => null)) as { to?: string } | null;
     const originalUrlHeader = request.headers.get("x-ms-original-url");
 
+    // Resolve 'to' parameter from various sources (query, body, route, or header)
     let to = queryTo ?? body?.to ?? routeLink;
     if (!to && originalUrlHeader) {
         const originalUrl = new URL(originalUrlHeader);
@@ -33,6 +38,9 @@ export async function redirect(
     }
 }
 
+/**
+ * Register the HTTP trigger for generic redirection.
+ */
 app.http("redirect", {
     methods: ["GET", "POST"],
     authLevel: "anonymous",
@@ -40,6 +48,9 @@ app.http("redirect", {
     handler: redirect,
 });
 
+/**
+ * Register the HTTP trigger for automatic routing of !slug patterns.
+ */
 app.http("autoroute", {
     methods: ["GET"],
     authLevel: "anonymous",

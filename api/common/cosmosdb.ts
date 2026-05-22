@@ -11,6 +11,12 @@ const container = client
   .database(process.env.COSMOSDB_DATABASE)
   .container(process.env.COSMOSDB_COLLECTION);
 
+/**
+ * Retrieves the long URL associated with a short link.
+ * @param shortlink - The short link slug.
+ * @param auth0Domain - The Auth0 domain to narrow the search scope.
+ * @returns A promise resolving to a ResourceNameValue object.
+ */
 export const getLongUrl = (shortlink: string, auth0Domain: string) => {
   const querySpec = {
     query:
@@ -51,6 +57,12 @@ export const getLongUrl = (shortlink: string, auth0Domain: string) => {
   });
 };
 
+/**
+ * Checks if a short link slug already exists in the database.
+ * @param shortlink - The short link slug to check.
+ * @param auth0Domain - The Auth0 domain scope.
+ * @returns A promise resolving to true if it exists, false otherwise.
+ */
 export const isShortLinkExists = (shortlink: string, auth0Domain: string) => {
   return new Promise<boolean>((resolve) => {
     getLongUrl(shortlink,auth0Domain)
@@ -66,6 +78,12 @@ export const isShortLinkExists = (shortlink: string, auth0Domain: string) => {
   });
 };
 
+/**
+ * cyrb53 non-cryptographic hash function.
+ * Used to hash the Auth0 domain for lookups.
+ * @param str - Input string to hash.
+ * @param seed - Optional seed value.
+ */
 export const cyrb53 = function (str: string, seed = 0) {
   let h1 = 0xdeadbeef ^ seed,
     h2 = 0x41c6ce57 ^ seed;
@@ -93,6 +111,15 @@ export type Item = {
   id?:string
 };
 
+/**
+ * Adds a new short link mapping to CosmosDB.
+ * @param shortlink - The unique slug.
+ * @param url - The destination URL.
+ * @param ttl - Time To Live in seconds.
+ * @param description - Optional description.
+ * @param auth0Domain - The Auth0 domain to associate with.
+ * @returns A promise resolving to the ID of the created document.
+ */
 export const addShortLink = (
   shortlink: string,
   url: string,
@@ -123,6 +150,11 @@ export const addShortLink = (
   });
 };
 
+/**
+ * Lists all links associated with a specific Auth0 domain hash.
+ * @param auth0Domain - The Auth0 domain.
+ * @returns A promise resolving to an array of Items.
+ */
 export const listAllLinks = (auth0Domain:string) => {
   const querySpec = {
     query:

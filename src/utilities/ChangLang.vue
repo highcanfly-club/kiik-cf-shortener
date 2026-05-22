@@ -39,30 +39,45 @@ import { onBeforeMount, ref } from 'vue'
 import { useLocaleStore } from '@/utilities/LocaleHelper.js'
 import { useRoute,useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+
 const langOpen = ref(false)
 const localeCounter = useLocaleStore()
 const {locale,availableLocales,messages,fallbackLocale, t} = useI18n({})
 const route = useRoute()
 const router = useRouter()
 
+/**
+ * Dynamically imports all flag SVG icons from the assets folder.
+ */
 const flagIcons = import.meta.glob('../assets/lang/*.svg', {
     eager: true,
     import: 'default'
 }) as Record<string, string>
 
+/**
+ * Returns the source URL for a specific locale's flag icon.
+ * @param localeCode - The locale string (e.g., 'fr-FR').
+ */
 const getFlagSrc = (localeCode: string): string => {
     const countryCode = localeCode.substring(3).toLowerCase()
     return flagIcons[`../assets/lang/${countryCode}.svg`] ?? ''
 }
 
+/**
+ * Handles language changes, including lazy loading of translation files.
+ * @param wantedLocale - The locale string to switch to.
+ */
 const changeLang = (wantedLocale: string) => {
     console.log(`Locale change #${localeCounter.count}`)
     
     if ((locale.value != wantedLocale) && availableLocales.includes(wantedLocale)) {
         localeCounter.count++
-        document.querySelector('html').setAttribute('lang', wantedLocale)
+        document.querySelector('html')?.setAttribute('lang', wantedLocale)
+        // Update URL query parameter
         router.replace({ query: { lang: wantedLocale } })
         console.log(`Change locale from ${locale.value} to ${wantedLocale}`);
+
+        // Lazy load messages if they aren't already loaded
         if (messages.value[wantedLocale].length == 0) {
             import(`@/locales/${wantedLocale}.json`).then((loadedMessages) => {
                 messages.value[wantedLocale] = loadedMessages;
@@ -74,6 +89,8 @@ const changeLang = (wantedLocale: string) => {
             locale.value = wantedLocale;
             langOpen.value = false;
         }
+
+        // Simple fallback logic
         if (wantedLocale === 'fr-FR') {
             fallbackLocale.value = 'en-US'
         }
@@ -83,6 +100,9 @@ const changeLang = (wantedLocale: string) => {
     }
 }
 
+/**
+ * Detects initial language from URL query or browser navigator on mount.
+ */
 onBeforeMount(() => {
     if ((route.query.lang !== undefined) && route.query.lang !== locale.value) {
         changeLang(route.query.lang as string)

@@ -6,6 +6,11 @@
     </button>
 </template>
 <script setup lang="ts">
+/**
+ * Simple styled button component with an icon.
+ * Props:
+ * - text: The text (HTML supported) to display in the button.
+ */
     const props = withDefaults(defineProps<{ 
         text: string; 
          }>(), { 

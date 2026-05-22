@@ -6,6 +6,10 @@ import {
   AUTH0_PERMISSION,
 } from "../common/auth0/TokenHelper.js";
 
+/**
+ * Azure Function to list all short URLs for the authenticated user/domain.
+ * Requires AUTH0_PERMISSION.list_all_short_url.
+ */
 export async function listShortUrl(
   request: HttpRequest,
   context: InvocationContext
@@ -38,9 +42,13 @@ export async function listShortUrl(
   return response;
 }
 
+/**
+ * Register the HTTP trigger for list-short-url.
+ */
 app.http("list-short-url", {
   methods: ["GET", "POST"],
   authLevel: "anonymous",
   route: "list-short-url",
   handler: listShortUrl,
 });
+

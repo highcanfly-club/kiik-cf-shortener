@@ -12,26 +12,26 @@ This website use:
   <!-- show login when not authenticated -->
   <div v-if="error">{{ error }}: {{ error_description }}</div>
   <div  v-if="!$auth0.isAuthenticated.value">
-    <light-button @click="login" :text="$t('log_in')"/>
+    <light-button @click="login" :text="t('log_in')"/>
   </div>
   <div  v-if="$auth0.isAuthenticated.value">
-    <light-button class="mr-4" @click="logout" :text="`${$t('log_out')} ( ${ $auth0.user.value === undefined ? '' : $auth0.user.value.name } )`"/>
+    <light-button class="mr-4" @click="logout" :text="`${t('log_out')} ( ${ $auth0.user.value === undefined ? '' : $auth0.user.value.name } )`"/>
     <span v-if="!access_token_valid">
-      <light-button class="mr-4" @click="verifyToken()" :text="$t('check_token')"/>
+      <light-button class="mr-4" @click="verifyToken()" :text="t('check_token')"/>
     </span>
     <span v-else>
-      <light-button class="mr-4" @click="access_token_valid = id_token_valid = !access_token_valid" :text="$t('mask_token')"/>
+      <light-button class="mr-4" @click="access_token_valid = id_token_valid = !access_token_valid" :text="t('mask_token')"/>
     </span>
   </div>
   <div v-if="$auth0.isAuthenticated.value">
 
     <p v-if="access_token_valid" class="text-slate-700 pt-8 text-normal font-mono break-all text-justify"
       @click="toggleAcessToken()">
-      access_token ({{ $t('validity') }}: {{(access_token_payload !== undefined) && (access_token_payload.exp !== undefined) ? (new
+      access_token ({{ t('validity') }}: {{(access_token_payload !== undefined) && (access_token_payload?.exp !== undefined) ? (new
       Date(access_token_payload.exp*1000)).toLocaleString(locale as string) : ""}}):<br />
-      {{ $t('permissions') }}
+      {{ t('permissions') }}
     <pre>
-        {{access_token_payload !== undefined ? access_token_payload.permissions : ""}}
+        {{access_token_payload !== undefined ? access_token_payload?.permissions : ""}}
       </pre>
     <span class="text-xs" :class="show_access_token ? 'inline' : 'hidden'">{{
     access_token
@@ -39,7 +39,7 @@ This website use:
     </p>
     <p v-if="id_token_valid" class="text-slate-700 pt-8 pb-8 text-normal font-mono break-all text-justify"
       @click="toggleIdToken()">
-      id_token (validité: {{(id_token_payload !== undefined) && (id_token_payload.exp !== undefined) ? (new
+      id_token (validité: {{(id_token_payload !== undefined) && (id_token_payload?.exp !== undefined) ? (new
       Date(id_token_payload.exp*1000).toLocaleString(locale as string)) : ""}}):
       <span class="text-xs" :class="show_id_token ? 'inline' : 'hidden'">{{
       id_token
@@ -64,21 +64,22 @@ import LightButton from "@/components/ui/LightButton.vue";
 import { useI18n } from 'vue-i18n'
 
 
-const $auth0 = getCurrentInstance().appContext.app.config.globalProperties.$auth0 as Auth0Instance
+const $auth0 = getCurrentInstance()?.appContext.app.config.globalProperties.$auth0 as Auth0Instance
 const route = useRoute()
 const error = ref('' as string)
 const error_description = ref('' as string)
 const access_token = ref('' as string)
 const access_token_valid = ref(false as boolean)
-const access_token_payload = ref(null as jose.JWTPayload)
+const access_token_payload = ref(null as jose.JWTPayload | null)
 const id_token = ref('' as string)
 const id_token_valid = ref(false as boolean)
-const id_token_payload = ref(null as jose.JWTPayload)
+const id_token_payload = ref(null as jose.JWTPayload | null)
 const show_access_token = ref(false)
 const show_id_token = ref(false)
 const sanity_token = ref('' as string)
-const { locale } = useI18n({ useScope: 'global' })
+const { locale, t } = useI18n({ useScope: 'global' })
 
+// Handle errors returned in the URL query string
 if (
       route !== undefined &&
       route.query !== undefined &&
@@ -89,11 +90,16 @@ if (
       console.log(route.query);
     }
 
+    /**
+     * Triggers the Auth0 redirect login flow.
+     */
     function login():void {
        $auth0.loginWithRedirect();
     }
 
-    // Log the user out
+    /**
+     * Logs the user out and redirects back to the origin.
+     */
     function logout():void {
        $auth0.logout({
         logoutParams:{
@@ -102,6 +108,9 @@ if (
       });
     }
 
+    /**
+     * Toggles visibility of the raw access token.
+     */
     function toggleAcessToken():void {
       if ((access_token.value === undefined) || (access_token.value.length === 0)) {
         getToken();
@@ -109,6 +118,9 @@ if (
       show_access_token.value = !show_access_token.value;
     }
 
+    /**
+     * Toggles visibility of the raw ID token.
+     */
     function toggleIdToken():void {
       if ((id_token.value === undefined) || (id_token.value.length === 0)) {
         getToken();
@@ -116,6 +128,9 @@ if (
       show_id_token.value = !show_id_token.value;
     }
 
+    /**
+     * Retrieves tokens silently from the Auth0 SDK.
+     */
     function getToken():void {
        $auth0
         .getTokenSilentlyVerbose()
@@ -125,6 +140,9 @@ if (
         });
     }
 
+    /**
+     * Manually verifies and decodes the access and ID tokens to show their payloads.
+     */
     function verifyToken():void {
       verifyTokenAsync(
         $auth0.getTokenSilentlyVerbose(),
@@ -151,3 +169,4 @@ if (
       });
     }
 </script>
+
