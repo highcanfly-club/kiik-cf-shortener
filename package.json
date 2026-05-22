@@ -12,6 +12,8 @@
     "dev": "npm run prepare-env && vite",
     "convert-typo": "npx tsx ./typo/generate-webfonts.ts",
     "build": "npm run convert-typo && npm run prepare-env && vite build && gulp licenses",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "start": "npx @azure/static-web-apps-cli start https://localhost:5173 --swa-config-location ./ -s -e localhost.pem -k localhost.key -p 8788 --api-location ./api -t 120 --run 'npm run dev'",
     "prestart": "cd api && npm run watch &",
@@ -33,6 +35,7 @@
   "devDependencies": {
     "@azure/static-web-apps-cli": "2.0.9",
     "@babel/types": "^7.29.0",
+    "@eslint/js": "^10.0.0",
     "@highcanfly-club/fontawesome": "^1.2.0",
     "@sctg/code-stats": "^0.1.4",
     "@sctg/fontminify": "^1.0.4",
@@ -44,7 +47,10 @@
     "@types/qrcode": "^1.5.6",
     "@vitejs/plugin-vue": "^6.0.7",
     "autoprefixer": "^10.5.0",
+    "eslint": "^10.0.0",
+    "eslint-plugin-vue": "^10.5.1",
     "glob": "13.0.6",
+    "globals": "^17.6.0",
     "gulp": "^5.0.1",
     "gulp-append-prepend": "^1.0.9",
     "gulp-replace": "^1.1.4",
@@ -56,6 +62,8 @@
     "ts-node": "^10.9.2",
     "tsx": "4.22.3",
     "typescript": "^6.0.3",
-    "vite": "^8.0.14"
+    "typescript-eslint": "^8.46.2",
+    "vite": "^8.0.14",
+    "vue-eslint-parser": "^10.4.0"
   }
 }

@@ -55,8 +55,7 @@ async function getJwks() {
           data += chunk;
         });
         res.on("end", () => {
-          let structuredData = {} as Auth0JWKS;
-          structuredData = {
+          const structuredData = {
             ...(JSON.parse(data) as JWKS),
             domain: process.env.AUTH0_DOMAIN,
             namespace: process.env.AUTH0_CUSTOM_NAMESPACE,

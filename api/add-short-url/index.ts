@@ -17,7 +17,7 @@ export async function addShortUrl(
   context: InvocationContext
 ): Promise<HttpResponseInit> {
   const auth0Domain: string = process.env.AUTH0_DOMAIN;
-  let response: HttpResponseInit = { body: null as string };
+  const response: HttpResponseInit = { body: null as string };
   const authorizationHeader = request.headers.get("auth0-authorization"); // authorization is those from Azure
   const jwtToken: string =
     parseTokenFromAuthorizationHeader(authorizationHeader);

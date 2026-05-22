@@ -9,14 +9,11 @@ import colors from "picocolors";
 
 const NEUTRA_FONT_REGEX = /NeutrafaceText-.*\.(eot|ttf|svg|woff|woff2)(\?.+)?$/;
 const NEUTRA_TTF_FILTER = "NeutrafaceText-*.ttf";
-const TTF_REGEX = /NeutrafaceText-.*\.(ttf)(\?.+)?$/;
 const LOCALES_DIR = "src/locales";
 const LOCALES_REGEX = /.*json$/;
 const SHA256_8_REGEX = /(NeutrafaceText.*)\.(.*)\.(eot|ttf|svg|woff|woff2)$/;
-const FONTMIN_EXTENSIONS = ["eot", "woff", "woff2", "svg"];
 const BASE_DIR = "dist/assets";
 const GLYPH_WHITELIST = [""];
-const NEUTRA_SRC_DIR = "./typo";
 
 function makeYellow(str: string) {
   return colors.yellow(str);
@@ -109,10 +106,8 @@ export default function vitePluginNeutrafaceMinify(
   options: vitePluginNeutrafaceMinifyOptions = {}
 ): Plugin {
   const {
-    ttfRegex = TTF_REGEX,
     localesDir = LOCALES_DIR,
     infilesRegex = LOCALES_REGEX,
-    outFontExtension = FONTMIN_EXTENSIONS,
     fontRegex = NEUTRA_FONT_REGEX,
     baseDir = BASE_DIR,
     glyphWhitelist = GLYPH_WHITELIST,
@@ -120,7 +115,6 @@ export default function vitePluginNeutrafaceMinify(
   } = options;
 
   let config: ResolvedConfig;
-  let outDir = baseDir;
   let base: string = "/";
   let isBuild: boolean = false;
 
@@ -138,22 +132,13 @@ export default function vitePluginNeutrafaceMinify(
         base = c.base;
         if (base === "") base = "./";
       }
-      if (c.build?.outDir) {
-        outDir = c.build.outDir;
-      }
-      const userConfig: UserConfig = {};
-      if (!isBuild) {
-      } else {
-        // -----------build------------
-      }
-      return userConfig;
+      return {} as UserConfig;
     },
 
     async closeBundle() {
       if (isBuild) {
         config.logger.info(makeYellow("Minify Neutraface fonts"));
         getFileList(localesDir, infilesRegex).then((files) => {
-          let glyphListStr = "";
           const processes = [] as Promise<string[]>[];
           files.forEach((_file) => {
             processes.push(getGlyphs(localesDir, _file));
@@ -175,7 +160,7 @@ export default function vitePluginNeutrafaceMinify(
               .use(
                 Fontminify.ttf2woff({
                   deflate: true,
-                } as any)
+                })
               )
               .use(Fontminify.ttf2woff2());
             //.use(Fontmin.ttf2svg())
@@ -184,19 +169,16 @@ export default function vitePluginNeutrafaceMinify(
                 objectMode: true,
                 // allowHalfOpen: false,
                 transform(chunk, enc, callback) {
-                  let srcFile = "";
-                  let splitPath = [];
                   if (chunk && chunk.path) {
-                    splitPath = chunk.path.match(SHA256_8_REGEX);
+                    const splitPath = chunk.path.match(SHA256_8_REGEX);
                     if (splitPath && splitPath.length >= 3) {
-                      srcFile = `${BASE_DIR}/${splitPath[1]}*.${splitPath[3]}`;
+                      const srcFile = `${BASE_DIR}/${splitPath[1]}*.${splitPath[3]}`;
                       glob(srcFile, function (err, matches) {
+                        if (err) return;
                         if (matches.length) {
                           const origSplitted = matches[0].match(SHA256_8_REGEX);
                           chunk.basename = `${origSplitted[1]}.${origSplitted[2]}.${origSplitted[3]}`;
-                          const dstFileStat = fsc.statSync(
-                            `${BASE_DIR}/${chunk.basename}`
-                          );
+                          fsc.statSync(`${BASE_DIR}/${chunk.basename}`);
                           //printFileInfo(baseDir, chunk.basename, dstFileStat.size, getWriteType(chunk.basename), 70, config)
                         }
                       });
@@ -206,7 +188,7 @@ export default function vitePluginNeutrafaceMinify(
                 },
               })
             );
-            fontmin.run((err: Error, files, stream) => {
+            fontmin.run((err: Error) => {
               getFileList(baseDir, fontRegex).then((files) => {
                 config.logger.info(makeYellow("After Neutraface minification"));
                 files.forEach((file) => {

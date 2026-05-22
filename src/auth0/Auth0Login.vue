@@ -55,7 +55,6 @@ import { getCurrentInstance, ref } from "vue";
 import { GetTokenSilentlyVerboseResponse } from "@auth0/auth0-spa-js";
 import { useRoute } from "vue-router";
 import {
-  getCustomClaim,
   verifyTokenAsync,
   oAuthTokenType,
 } from "./TokenHelper";
@@ -66,7 +65,7 @@ import { useI18n } from 'vue-i18n'
 
 
 const $auth0 = getCurrentInstance().appContext.app.config.globalProperties.$auth0 as Auth0Instance
-const route = useRoute() ; route.query
+const route = useRoute()
 const error = ref('' as string)
 const error_description = ref('' as string)
 const access_token = ref('' as string)
@@ -136,6 +135,7 @@ if (
         access_token_valid.value = jwt !== null;
         console.log(jwt);
         access_token_payload.value = jwt.payload;
+        sanity_token.value = (jwt.payload?.sanity_token as string) ?? "";
         console.log(access_token_payload.value);
       });
       verifyTokenAsync(
@@ -148,25 +148,6 @@ if (
         console.log(jwt);
         id_token_payload.value = jwt.payload;
         console.log(id_token_payload.value);
-      });
-    }
-
-    function getSanityToken() {
-      getCustomClaim(
-        "sanity_token",
-         $auth0.getTokenSilentlyVerbose(),
-        Date.now() / 1000
-      ).then((claim) => {
-        console.log(claim);
-        sanity_token.value = claim as string;
-      });
-      verifyTokenAsync(
-         $auth0.getTokenSilentlyVerbose(),
-        oAuthTokenType.access_token,
-        undefined,
-        Date.now() / 1000
-      ).then((jwt) => {
-        console.log(jwt);
       });
     }
 </script>

@@ -6,7 +6,7 @@ This website use:
 - Vite, Vue3, FontAwesome 6, TailwindCss 3
 - And many others
 */
-import { createApp, getCurrentInstance } from "vue";
+import { createApp } from "vue";
 import App from "@/App.vue";
 import { createWebHistory, createRouter, RouteRecordRaw } from "vue-router";
 import type { Auth0Instance, RedirectCallback } from "@/auth0";
@@ -20,7 +20,6 @@ import "@/index.scss";
 import enUS from "@/locales/en-US.json";
 
 type MessageSchema = typeof enUS;
-type Messages = { "fr-FR"?: MessageSchema; "en-US"?: MessageSchema };
 
 declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {

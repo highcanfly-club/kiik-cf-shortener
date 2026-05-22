@@ -8,14 +8,14 @@ This website use:
 */
 
 import Fontminify from '@sctg/fontminify'
-import stream from 'stream'
+import type { Readable } from 'stream'
 import gulp from 'gulp'
 import replace from 'gulp-replace'
 
 const SRC_PATH = 'typo'
 const DST_PATH = 'src/assets/typo'
 type FontminifyFile = {
-    _contents: stream.Readable;
+    _contents: Readable;
 }
 
 function convertTTF2OTF(srcPath: string, dstPath: string): Promise<FontminifyFile[]> {
@@ -25,7 +25,7 @@ function convertTTF2OTF(srcPath: string, dstPath: string): Promise<FontminifyFil
             .dest(dstPath + '/')
             .use(Fontminify.otf2ttf());
 
-        fontmin.run((err: Error, files: FontminifyFile[], stream) => {
+        fontmin.run((err: Error, files: FontminifyFile[]) => {
             if (err) {
                 reject(err);
             } else {
@@ -48,7 +48,7 @@ function convertTTF2WEB(srcPath: string, dstPath: string): Promise<FontminifyFil
                 fontPath: srcPath + '/',
             }));
 
-        fontmin.run((err: Error, files: FontminifyFile[], stream) => {
+        fontmin.run((err: Error, files: FontminifyFile[]) => {
             if (err) {
                 reject(err);
             } else {
@@ -60,7 +60,7 @@ function convertTTF2WEB(srcPath: string, dstPath: string): Promise<FontminifyFil
 
 function correctCssPath(srcPath: string) {
     gulp.src(srcPath + '/*.css')
-    .pipe(replace(/\"src\/assets\/typo\//g, '"@/assets/typo/'))
+    .pipe(replace(/"src\/assets\/typo\//g, '"@/assets/typo/'))
         .pipe(gulp.dest(srcPath + '/'));
 }
 

@@ -7,6 +7,7 @@ This website use:
 - And many others
 */
 /** @type {import('tailwindcss').Config} */
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
