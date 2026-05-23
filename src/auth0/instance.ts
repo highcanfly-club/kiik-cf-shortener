@@ -23,7 +23,8 @@ export type Auth0User = User
 // Not doing this would result into a conflict
 // due to public/private class members mismatch
 // See: https://stackoverflow.com/a/64754408/7931540
-type Auth0Client = Pick<Auth0ClientClass, keyof Auth0ClientClass>;
+// Exclude the internal `mfa` property type, which can conflict with the actual runtime client shape.
+type Auth0Client = Omit<Pick<Auth0ClientClass, keyof Auth0ClientClass>, 'mfa'>;
 
 interface Auth0State {
   auth0Client: Auth0Client;
@@ -155,8 +156,14 @@ export function initAuth0<AppStateType> ({
   /** Instantiate the SDK client */
   void (async () => {
     // Create a new instance of the SDK client using members of the given options object
-    const authOptions: Auth0ClientOptions = {...options,clientId: options.clientId}
-    authOptions.authorizationParams.redirect_uri = redirectUri
+    const authOptions: Auth0ClientOptions = {
+      ...options,
+      clientId: options.clientId,
+      authorizationParams: {
+        ...(options.authorizationParams ?? {}),
+        redirect_uri: redirectUri
+      }
+    }
     state.auth0Client = await createAuth0Client(authOptions)
 
     console.log(authOptions)
@@ -232,7 +239,7 @@ export function initAuth0<AppStateType> ({
       } catch (e) {
         state.error = e
         // Won't be compliant with `Auth0Client['handleRedirectCallback']` without a returned object
-        return {}
+        return {} as unknown as ReturnType<Auth0Client['handleRedirectCallback']>
       } finally {
         state.loading = false
       }
