@@ -1,4 +1,4 @@
-# KiiK Cloudflare-style shortener on Azure Static Web Apps
+# KiiK CF shortener on Azure Static Web Apps
 
 KiiK CF Shortener is a small URL shortener built with Vue 8, Vite, Tailwind CSS 4, Auth0, Azure Static Web Apps managed Functions, and Azure Cosmos DB for NoSQL.
 
