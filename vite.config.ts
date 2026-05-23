@@ -53,7 +53,7 @@ export default defineConfig({
     {
       key: fs.readFileSync("./localhost.key"),
       cert: fs.readFileSync("./localhost.pem"),
-    } : false,
+    } : undefined,
   }
 })
 
