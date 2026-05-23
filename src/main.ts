@@ -106,7 +106,7 @@ app.config.globalProperties.$auth0 = initAuth0({
     returnTo: `window.location.origin`
   },
   ...auth0conf
-} as never); // Cast as never due to slight type mismatch in Auth0 SDK for cacheLocation
+} as never) || ({} as Auth0Instance); // Cast as never due to slight type mismatch in Auth0 SDK for cacheLocation
 
 /**
  * Mount the application to the DOM element with id 'app'.

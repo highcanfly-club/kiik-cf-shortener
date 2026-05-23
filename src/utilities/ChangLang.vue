@@ -35,6 +35,7 @@ This website use:
     </div>
 </template>
 <script setup lang="ts">
+/// <reference types="vite/client" />
 import { onBeforeMount, ref } from 'vue'
 import { useLocaleStore } from '@/utilities/LocaleHelper.js'
 import { useRoute,useRouter } from 'vue-router';
@@ -78,9 +79,9 @@ const changeLang = (wantedLocale: string) => {
         console.log(`Change locale from ${locale.value} to ${wantedLocale}`);
 
         // Lazy load messages if they aren't already loaded
-        if (messages.value[wantedLocale].length == 0) {
+        if ((messages.value as Record<string, string>)[wantedLocale]?.length == 0) {
             import(`@/locales/${wantedLocale}.json`).then((loadedMessages) => {
-                messages.value[wantedLocale] = loadedMessages;
+                (messages.value as Record<string, string>)[wantedLocale] = loadedMessages;
                 console.log(`Lazily loaded ${wantedLocale} messages`);
                 locale.value = wantedLocale;
                 langOpen.value = false;

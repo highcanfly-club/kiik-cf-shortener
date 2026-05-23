@@ -11,13 +11,13 @@ This website use:
     <block-header />
     <div id="3blocks" class="mt-4 flex flex-col lg:flex-row justify-between">
       <div id="3blocks1">
-        <p class="text-base font-neutra-demiitalic text-ambblue-800 tracking-widest">{{ $t('Repository') }}: <a
-            href="https://github.com">{{ $t('github') }}</a></p>
-        <p class="text-base font-neutra-demiitalic text-ambblue-100 tracking-widest">{{ $t('Follow') }}: <a
-            href="https://github.com/highcanfly-club/kiik-cf-shortener">{{ $t('repository') }}</a></p>
-        <p class="text-base font-neutra-book capitalize text-ambgrey-900">{{ $t('Hosting') }}: <a
-            href="https://azure.microsoft.com">{{ $t('azure_static_web_app') }}</a></p>
-        <p class="text-xs tracking-wide font-neutra-book text-ambgrey-900">{{ $t('total_cost') }}</p>
+        <p class="text-base font-neutra-demiitalic text-ambblue-800 tracking-widest">{{ t('Repository') }}: <a
+            href="https://github.com">{{ t('github') }}</a></p>
+        <p class="text-base font-neutra-demiitalic text-ambblue-100 tracking-widest">{{ t('Follow') }}: <a
+            href="https://github.com/highcanfly-club/kiik-cf-shortener">{{ t('repository') }}</a></p>
+        <p class="text-base font-neutra-book capitalize text-ambgrey-900">{{ t('Hosting') }}: <a
+            href="https://azure.microsoft.com">{{ t('azure_static_web_app') }}</a></p>
+        <p class="text-xs tracking-wide font-neutra-book text-ambgrey-900">{{ t('total_cost') }}</p>
       </div>
       <div id="3blocks2" class="mt-2 lg:mt-0">
         <light-button @click="redirect('https://highcanfly.club')" text="High Can Fly" />
@@ -25,7 +25,7 @@ This website use:
       <div id="3blocks3" class="mt-2 lg:mt-0">
         <div class="flex">
           <input type="text" ref="short" 
-          class="mr-1 border-ambblue-800 text-sm font-neutra-booknoambiguity w-52 rounded-lg border-2 border-dotted" :placeholder="$t('enter_link')"/>
+          class="mr-1 border-ambblue-800 text-sm font-neutra-booknoambiguity w-52 rounded-lg border-2 border-dotted" :placeholder="t('enter_link')"/>
           <light-button @click="redirectApi(($refs.short as HTMLInputElement).value)" text="go" />
         </div>
       </div>
@@ -48,6 +48,8 @@ import HrDotted from '@/components/ui/HRDotted.vue';
 import ChangLang from '@/utilities/ChangLang.vue';
 import BlockFooter from '@/components/footers/BlockFooter.vue';
 import BlockHeader from '../components/headers/BlockHeader.vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n({});
 
 /**
  * Redirects the browser to a specific URL.
