@@ -175,11 +175,7 @@ export default function vitePluginNeutrafaceMinify(
               )
               .src(`${BASE_DIR}/${neutraTTFFontFilter}`)
               .dest(`${BASE_DIR}/`)
-              .use(
-                Fontminify.ttf2woff({
-                  deflate: true,
-                })
-              )
+              .use(Fontminify.ttf2woff())
               .use(Fontminify.ttf2woff2());
 
             // Transform stream to handle hashed filenames during build
@@ -191,14 +187,19 @@ export default function vitePluginNeutrafaceMinify(
                     const splitPath = chunk.path.match(SHA256_8_REGEX);
                     if (splitPath && splitPath.length >= 3) {
                       const srcFile = `${BASE_DIR}/${splitPath[1]}*.${splitPath[3]}`;
-                      glob(srcFile, function (err, matches) {
-                        if (err) return;
-                        if (matches.length) {
-                          const origSplitted = matches[0].match(SHA256_8_REGEX);
-                          chunk.basename = `${origSplitted[1]}.${origSplitted[2]}.${origSplitted[3]}`;
-                          fsc.statSync(`${BASE_DIR}/${chunk.basename}`);
-                        }
-                      });
+                      glob(srcFile)
+                        .then((matches) => {
+                          if (matches.length) {
+                            const origSplitted = matches[0].match(SHA256_8_REGEX);
+                            if (origSplitted && origSplitted.length >= 4) {
+                              chunk.basename = `${origSplitted[1]}.${origSplitted[2]}.${origSplitted[3]}`;
+                              fsc.statSync(`${BASE_DIR}/${chunk.basename}`);
+                            }
+                          }
+                          callback(null, chunk);
+                        })
+                        .catch((err) => callback(err));
+                      return;
                     }
                   }
                   callback(null, chunk);
